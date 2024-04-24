@@ -1,4 +1,4 @@
-#indique que l’image de base à utiliser est php:8.2-apache
+#indique que l’image de base à utiliser est php:8.3-apache
 FROM php:8.3-apache
 
 #met à jour la liste des packages disponibles et met à niveau les packages déjà installés dans l’image
@@ -10,6 +10,8 @@ RUN apt-get update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
+RUN echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+
 RUN a2enmod rewrite
 
 WORKDIR /var/www
@@ -17,3 +19,6 @@ WORKDIR /var/www
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN curl https://get.symfony.com/cli/installer | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
+RUN curl -sL https://deb.nodesource.com/setup_21.x | bash -
+RUN apt-get install -y nodejs

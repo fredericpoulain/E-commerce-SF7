@@ -3,21 +3,21 @@ version: '3.8'
 services:
   db:
     image: mysql
-    container_name: customNameContainerMySQL
+    container_name: database_ecommerce_sf7
     restart: always
     volumes:
       - db-data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_USER: usernameMysql
-      MYSQL_PASSWORD: passMysql
-      MYSQL_DATABASE: customNameDATABASE
+      MYSQL_USER: fred
+      MYSQL_PASSWORD: azazaz
+      MYSQL_DATABASE: db_ecommerce_sf7
     networks:
       - dev
 
   phpmyadmin:
     image: phpmyadmin
-    container_name: customNamePhpMyAdmin
+    container_name: phpMyAdmin_ecommerce_sf7
     depends_on:
       - db
     ports:
@@ -29,7 +29,7 @@ services:
 
   www:
     build: docker
-    container_name: customNameProject
+    container_name: www_ecommerce_sf7
     ports:
       - "8000:80"
     volumes:
@@ -39,7 +39,7 @@ services:
       - dev
 
   mailcatcher:
-    container_name: customName_mailcatcher
+    container_name: mailcatcher
     image: jeanberu/mailcatcher:latest
     ports:
       - "1080:1080"
