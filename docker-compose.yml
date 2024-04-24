@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    container_name: customNameContainerMySQL
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_USER: usernameMysql
+      MYSQL_PASSWORD: passMysql
+      MYSQL_DATABASE: customNameDATABASE
+    networks:
+      - dev
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: customNamePhpMyAdmin
+    depends_on:
+      - db
+    ports:
+      - 8080:80 #Lorsque l'on tape 127.0.0.1:8080, il va aller chercher 127.0.0.1:80 du container
+    environment:
+      PMA_HOST: db
+    networks:
+      - dev
+
+  www:
+    build: docker
+    container_name: customNameProject
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/vhosts:/etc/apache2/sites-enabled
+      - ./:/var/www
+    networks:
+      - dev
+
+  mailcatcher:
+    container_name: customName_mailcatcher
+    image: jeanberu/mailcatcher:latest
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+networks:
+  dev:
+
+volumes:
+  db-data:
