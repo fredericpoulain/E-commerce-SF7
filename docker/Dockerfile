@@ -10,7 +10,7 @@ RUN apt-get update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
-RUN echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+#RUN echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
 
 RUN a2enmod rewrite
 
