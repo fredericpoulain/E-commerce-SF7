@@ -128,12 +128,12 @@ class ShippingAddresses
         return $this;
     }
 
-    public function isMain(): ?bool
+    public function getIsMain(): ?bool
     {
         return $this->isMain;
     }
 
-    public function setMain(bool $isMain): static
+    public function setIsMain(bool $isMain): static
     {
         $this->isMain = $isMain;
 
