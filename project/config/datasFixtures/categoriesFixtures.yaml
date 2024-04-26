@@ -1,0 +1,104 @@
+Ordinateurs:
+  description: 'Catégorie ordinateur, pc, mac...'
+  sort: 1
+  childrenCategory:
+    PC tour:
+      description: 'Catégorie des tours d''ordinateur.'
+      sort: 1
+      childrenCategory: null
+    PC portable:
+      description: 'Catégorie des PC portable.'
+      sort: 2
+      childrenCategory:
+        PC portable gamer:
+          description: 'Catégorie des pc portables gamer.'
+          sort: 1
+          childrenCategory: null
+        Portable Mac:
+          description: 'Catégorie des portables Mac.'
+          sort: 2
+          childrenCategory: null
+        Sacoche portable:
+          description: 'Catégorie des sacoches de portable .'
+          sort: 3
+          childrenCategory: null
+    Tablette:
+      description: 'Catégorie des tablettes.'
+      sort: 3
+      childrenCategory: null
+Composants:
+  description: 'Catégorie des composants : Carte graphique, ram...'
+  sort: 2
+  childrenCategory:
+    Processeur:
+      description: 'Catégorie des tours Processeurs.'
+      sort: 1
+      childrenCategory:
+        Processeur AMD:
+          description: 'Catégorie des processeur AMD.'
+          sort: 1
+          childrenCategory: null
+        Processeur INTEL:
+          description: 'Catégorie des processeur INTEL.'
+          sort: 2
+          childrenCategory: null
+    RAM:
+      description: 'Catégorie de la mémoire vive.'
+      sort: 2
+      childrenCategory:
+        Ram DDR4:
+          description: 'Catégorie de la ram ddr4.'
+          sort: 1
+          childrenCategory: null
+        Ram DDR5:
+          description: 'Catégorie de la ram ddr5.'
+          sort: 2
+          childrenCategory: null
+    Carte graphique:
+      description: 'Catégorie des cartes graphiques.'
+      sort: 3
+      childrenCategory: null
+    Stockage:
+      description: 'Catégorie des disques de stockage.'
+      sort: 4
+      childrenCategory:
+        disque SSD:
+          description: 'Catégorie des disques SSD.'
+          sort: 1
+          childrenCategory: null
+        Disque SSD M2 :
+          description: 'Catégorie des SSD M.2 NVMe.'
+          sort: 2
+          childrenCategory: null
+        Disque dur magnétique:
+          description: 'Catégorie de la ram ddr5.'
+          sort: 3
+          childrenCategory: null
+        Clé USB:
+          description: 'Catégorie des clé USB.'
+          sort: 4
+          childrenCategory: null
+    Carte mère:
+      description: 'Catégorie des cartes mères.'
+      sort: 5
+      childrenCategory: null
+Périphériques:
+  description: 'Catégorie de tous les périphériques : claviers, écran...'
+  sort: 3
+  childrenCategory:
+    Écran PC:
+      description: 'Catégorie des écrans.'
+      sort: 1
+      childrenCategory: null
+    Clavier:
+      description: 'Catégorie des claviers.'
+      sort: 2
+      childrenCategory: null
+    Souris:
+      description: 'Catégorie des souris.'
+      sort: 3
+      childrenCategory: null
+    Imprimantes:
+      description: 'Catégorie des imprimantes.'
+      sort: 4
+      childrenCategory: null

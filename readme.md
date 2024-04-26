@@ -1,4 +1,4 @@
-# COMMANDES
+# COMMANDES DOCKER
 
 
 Lancer
@@ -23,7 +23,17 @@ Donner les droits
 ```bash
 sudo chown -R $USER ./
 ```
-## Access
+
+# COMMANDES FIXTURES
+Vide et remplie la BDD : 
+```bash
+symfony console d:f:l --no-interaction
+```
+Ajoute des données en BDD :
+```bash
+symfony console d:f:l --append
+```
+# Access
 
 The application:
 http://127.0.0.1:8000/
