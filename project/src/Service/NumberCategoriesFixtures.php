@@ -22,14 +22,14 @@ readonly class NumberCategoriesFixtures
         return $this->countCategories($allCategories);
 
     }
-    private function countCategories($array) {
-        $count = 0;
-        foreach ($array as $category) {
-            $count++; // Compte la catégorie principale
+    private function countCategories($array): int
+    {
+        return array_reduce($array, function ($carry, $category) {
+            $carry++; // Compte la catégorie principale
             if (isset($category['childrenCategory']) && is_array($category['childrenCategory'])) {
-                $count += $this->countCategories($category['childrenCategory']); // Compte les sous-catégories
+                $carry += $this->countCategories($category['childrenCategory']); // Compte les sous-catégories
             }
-        }
-        return $count;
+            return $carry;
+        }, 0);
     }
 }
