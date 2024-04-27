@@ -40,6 +40,9 @@ class Categories
     #[ORM\OneToMany(targetEntity: Products::class, mappedBy: 'category')]
     private Collection $products;
 
+    #[ORM\Column]
+    private ?int $sort = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -155,6 +158,18 @@ class Categories
                 $product->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): static
+    {
+        $this->sort = $sort;
 
         return $this;
     }

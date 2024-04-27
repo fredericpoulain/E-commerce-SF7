@@ -65,3 +65,13 @@ Arrête les services et supprime les volumes associés à ces services.
 docker-compose down --volumes
 ```
 
+## GIT
+Add
+```bash
+git add .
+```
+
+commit
+```bash
+git commit -m ""
+```

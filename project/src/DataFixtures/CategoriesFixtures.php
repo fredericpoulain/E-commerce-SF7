@@ -59,7 +59,7 @@ class CategoriesFixtures extends Fixture
             $category->setName($name);
             $category->setSlug($this->slugger->slug($category->getName())->lower());
             $category->setDescription($data['description']);
-//            $category->setSort($data['sort']);
+            $category->setSort($data['sort']);
 
             //si la catégorie n'a pas de parent, c'est ici que l'on va ajouter une référence
             // pour l'association des produits. un produit sera associé à la "dernière catégorie" dans la hiérarchie.
