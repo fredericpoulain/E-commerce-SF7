@@ -43,6 +43,9 @@ class Categories
     #[ORM\Column]
     private ?int $sort = null;
 
+    #[ORM\OneToOne(mappedBy: 'category', cascade: ['persist', 'remove'])]
+    private ?ImagesCategories $imagesCategories = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -170,6 +173,23 @@ class Categories
     public function setSort(int $sort): static
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getImagesCategories(): ?ImagesCategories
+    {
+        return $this->imagesCategories;
+    }
+
+    public function setImagesCategories(ImagesCategories $imagesCategories): static
+    {
+        // set the owning side of the relation if necessary
+        if ($imagesCategories->getCategory() !== $this) {
+            $imagesCategories->setCategory($this);
+        }
+
+        $this->imagesCategories = $imagesCategories;
 
         return $this;
     }

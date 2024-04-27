@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class ProductFixture extends Fixture
+class ProductsFixture extends Fixture
 {
     private int $compteur = 1;
     private int $compteurProduct = 1;
@@ -42,6 +42,7 @@ class ProductFixture extends Fixture
             }
             $this->compteur++;
         }
+        dump($this->compteurProduct);
         $manager->flush();
     }
 

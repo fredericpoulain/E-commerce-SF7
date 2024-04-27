@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class CategoriesFixtures extends Fixture
 {
     private int $compteur = 1;
-
+    private int $compteurPourImage = 1;
     public function __construct(
         private readonly SluggerInterface $slugger,
         private readonly ParameterBagInterface $parameterBag,
@@ -67,7 +67,10 @@ class CategoriesFixtures extends Fixture
                 $this->addReference('cat-' . $this->compteur, $category);
                 $this->compteur++;
             }
-
+            //par contre ici on va créer un autre référence pour chaque catégorie.
+            // Elles nous serviront pour associer toutes les catégories à une image
+            $this->addReference('catForImage-' . $this->compteurPourImage, $category);
+            $this->compteurPourImage++;
             if ($parentCategory) {
                 $category->setCatParent($parentCategory);
             }

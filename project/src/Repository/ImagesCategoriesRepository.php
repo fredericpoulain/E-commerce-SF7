@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Images;
+use App\Entity\ImagesCategories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Images>
+ * @extends ServiceEntityRepository<ImagesCategories>
  *
- * @method Images|null find($id, $lockMode = null, $lockVersion = null)
- * @method Images|null findOneBy(array $criteria, array $orderBy = null)
- * @method Images[]    findAll()
- * @method Images[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ImagesCategories|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ImagesCategories|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ImagesCategories[]    findAll()
+ * @method ImagesCategories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ImagesRepository extends ServiceEntityRepository
+class ImagesCategoriesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Images::class);
+        parent::__construct($registry, ImagesCategories::class);
     }
 
     //    /**
-    //     * @return Images[] Returns an array of Images objects
+    //     * @return ImagesCategories[] Returns an array of ImagesCategories objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -36,7 +36,7 @@ class ImagesRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Images
+    //    public function findOneBySomeField($value): ?ImagesCategories
     //    {
     //        return $this->createQueryBuilder('i')
     //            ->andWhere('i.exampleField = :val')

@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ImagesRepository;
+use App\Repository\ImagesCategoriesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ImagesRepository::class)]
-class Images
+#[ORM\Entity(repositoryClass: ImagesCategoriesRepository::class)]
+class ImagesCategories
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,9 +16,9 @@ class Images
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\OneToOne(inversedBy: 'imagesCategories', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Products $product = null;
+    private ?Categories $category = null;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Images
         return $this;
     }
 
-    public function getProduct(): ?Products
+    public function getCategory(): ?Categories
     {
-        return $this->product;
+        return $this->category;
     }
 
-    public function setProduct(?Products $product): static
+    public function setCategory(Categories $category): static
     {
-        $this->product = $product;
+        $this->category = $category;
 
         return $this;
     }

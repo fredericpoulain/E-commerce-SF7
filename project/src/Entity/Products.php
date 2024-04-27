@@ -42,9 +42,9 @@ class Products
     private Collection $ordersDetails;
 
     /**
-     * @var Collection<int, Images>
+     * @var Collection<int, ImagesProducts>
      */
-    #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'product', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ImagesProducts::class, mappedBy: 'product', orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
@@ -161,14 +161,14 @@ class Products
     }
 
     /**
-     * @return Collection<int, Images>
+     * @return Collection<int, ImagesProducts>
      */
     public function getImages(): Collection
     {
         return $this->images;
     }
 
-    public function addImage(Images $image): static
+    public function addImage(ImagesProducts $image): static
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
@@ -178,7 +178,7 @@ class Products
         return $this;
     }
 
-    public function removeImage(Images $image): static
+    public function removeImage(ImagesProducts $image): static
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)

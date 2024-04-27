@@ -2,20 +2,21 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ImageProduct;
-use App\Entity\Images;
+
+use App\Entity\ImageCategory;
+use App\Entity\ImagesCategories;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ImageProductFixtures extends Fixture implements DependentFixtureInterface
+class ImagesCategoriesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i=1; $i<193; $i++) {
-            $image = new Images();
-            $image->setName('product-thumb-'. $i . '.png');
-            $image->setProduct($this->getReference('prod-' . $i));
+        for ($i=1; $i<27; $i++) {
+            $image = new ImagesCategories();
+            $image->setName('category-thumb-'. $i . '.png');
+            $image->setCategory($this->getReference('catForImage-' . $i));
             $manager->persist($image);
         }
         $manager->flush();
@@ -23,7 +24,7 @@ class ImageProductFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            ProductFixture::class
+            CategoriesFixtures::class
         ];
     }
 }

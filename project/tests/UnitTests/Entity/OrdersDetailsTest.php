@@ -3,7 +3,7 @@
 namespace App\Tests\UnitTests\Entity;
 
 use App\Entity\Categories;
-use App\Entity\Images;
+use App\Entity\ImagesProducts;
 use App\Entity\Orders;
 use App\Entity\OrdersDetails;
 use App\Entity\Products;
