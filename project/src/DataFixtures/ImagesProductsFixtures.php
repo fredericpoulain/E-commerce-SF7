@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\ImagesProducts;
+use App\Service\NumberProductsFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -12,11 +13,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ImagesProductsFixtures extends Fixture implements DependentFixtureInterface
 {
-
-    public function load(ObjectManager $manager): void
+    public function __construct(private readonly NumberProductsFixtures $numberProductsFixtures)
     {
-
-        for ($i=1; $i<193; $i++) {
+    }
+    public function load(ObjectManager $manager,): void
+    {
+        $numberProducts = $this->numberProductsFixtures->getNumber();
+        for ($i=1; $i<$numberProducts; $i++) {
             $image = new ImagesProducts();
             $image->setName('product-thumb-'. $i . '.png');
             $image->setProduct($this->getReference('prod-' . $i));

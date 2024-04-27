@@ -22,8 +22,8 @@ class ProductsFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $yamlFilePath = $this->parameterBag->get('productsFixtures');
-        $ContentCategory = Yaml::parse(file_get_contents($yamlFilePath));
-        foreach ($ContentCategory as $category => $products) {
+        $allProducts = Yaml::parse(file_get_contents($yamlFilePath));
+        foreach ($allProducts as $category => $products) {
             foreach ($products as $product) {
                 $prod = new Products();
                 $prod->setName($product['nom']);
@@ -42,7 +42,7 @@ class ProductsFixture extends Fixture
             }
             $this->compteur++;
         }
-        dump($this->compteurProduct);
+
         $manager->flush();
     }
 
