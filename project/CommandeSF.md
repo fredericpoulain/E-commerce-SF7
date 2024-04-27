@@ -79,3 +79,10 @@ symfony console cache:clear
 ```bash
 symfony console debug:router
 ```
+
+# Tailwaind CSS
+```bash
+composer require symfonycasts/tailwind-bundle
+php bin/console tailwind:init
+php bin/console tailwind:build --watch
+```
