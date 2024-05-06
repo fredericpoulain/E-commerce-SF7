@@ -21,6 +21,7 @@ class ProductsFixture extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
+        //https://symfony.com/doc/current/components/yaml.html
         $yamlFilePath = $this->parameterBag->get('productsFixtures');
         $allProducts = Yaml::parse(file_get_contents($yamlFilePath));
         foreach ($allProducts as $category => $products) {

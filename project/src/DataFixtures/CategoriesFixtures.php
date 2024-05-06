@@ -28,7 +28,7 @@ class CategoriesFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-
+        //https://symfony.com/doc/current/components/yaml.html
         $yamlFilePath = $this->parameterBag->get('categoriesFixtures');
         $categories = Yaml::parse(file_get_contents($yamlFilePath));
 
