@@ -1,0 +1,8 @@
+.ulMenuCat {
+    max-height: 0;
+    transition: 0.3s;
+    overflow: hidden;
+}
+.dropdown {
+    max-height: 96px;
+}

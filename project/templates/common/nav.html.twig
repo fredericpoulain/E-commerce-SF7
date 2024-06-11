@@ -1,23 +1,24 @@
 {#{{ dump(globalDataCategory) }}#}
 {% for key1, value1 in globalDataCategory %}
     <div>
-        <div class="text-4xl text-center py-2">
+        <div class="text-5xl text-center py-2 border-solid border-b-2 border-t-2 border-sky-500">
             {{ key1 }}
         </div>
         <div >
             <div >
                 <ul >
                     {% for key2, value2 in value1.childrenCategory %}
-                        <li class="text-center">
+                        <li class="text-center ">
                             {% if value2.childrenCategory is not empty %}
                                 {#                                                <a class="accordionCatMain"#}
                                 {#                                                   href="{{ path('app_category', { slug: value2.slug }) }}">{{ key2 }}</a>#}
-                                <div class="cursor-pointer">{{ key2 }}</div>
-                                <ul class="max-h-0 overflow-hidden">
+                                <div class="text-3xl menuCat cursor-pointer" >{{ key2 }} <i class="fa-solid fa-chevron-down"></i></div>
+{#                                max-h-0 overflow-hidden transition-[height] duration-500 ease-in-out#}
+                                <ul class="ulMenuCat bg-slate-100" >
                                     {% for key3, value3 in value2.childrenCategory %}
                                         <li>
                                             {#                                                            <a href="{{ path('app_page', { slug: value3.slug }) }}">{{ key3 }}</a>#}
-                                            <a href="#">{{ key3 }}</a>
+                                            <a href="#" class="">{{ key3 }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -25,7 +26,7 @@
                                 {#                                                <a class="accordionCatMain"#}
                                 {#                                                   href="{{ path('app_page', { slug: value2.slug }) }}"#}
                                 {#                                                >{{ key2 }}</a>#}
-                                <a  href="#">{{ key2 }}</a>
+                                <a  href="#" class="text-3xl">{{ key2 }}</a>
 
                             {% endif %}
                         </li>
