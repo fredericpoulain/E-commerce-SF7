@@ -1,19 +1,19 @@
+{#{{ dump(globalDataCategory) }}#}
 {% for key1, value1 in globalDataCategory %}
-    <div class="accordionItem">
-        <div class="accordion-item-header">
+    <div>
+        <div class="text-4xl text-center py-2">
             {{ key1 }}
         </div>
-        <div class="accordion-item-body">
-            <div class="accordion-item-body-content">
-                <ul class="sousMenuAccordion">
+        <div >
+            <div >
+                <ul >
                     {% for key2, value2 in value1.childrenCategory %}
-                        <li>
+                        <li class="text-center">
                             {% if value2.childrenCategory is not empty %}
                                 {#                                                <a class="accordionCatMain"#}
                                 {#                                                   href="{{ path('app_category', { slug: value2.slug }) }}">{{ key2 }}</a>#}
-                                <a class="accordionCatMain"
-                                   href="#">{{ key2 }}</a>
-                                <ul>
+                                <div class="cursor-pointer">{{ key2 }}</div>
+                                <ul class="max-h-0 overflow-hidden">
                                     {% for key3, value3 in value2.childrenCategory %}
                                         <li>
                                             {#                                                            <a href="{{ path('app_page', { slug: value3.slug }) }}">{{ key3 }}</a>#}
@@ -25,7 +25,7 @@
                                 {#                                                <a class="accordionCatMain"#}
                                 {#                                                   href="{{ path('app_page', { slug: value2.slug }) }}"#}
                                 {#                                                >{{ key2 }}</a>#}
-                                <a class="accordionCatMain" href="#">{{ key2 }}</a>
+                                <a  href="#">{{ key2 }}</a>
 
                             {% endif %}
                         </li>

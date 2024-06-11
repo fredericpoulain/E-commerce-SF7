@@ -31,7 +31,7 @@ Composants:
   sort: 2
   childrenCategory:
     Processeur:
-      description: 'Catégorie des tours Processeurs.'
+      description: 'Catégorie des processeurs.'
       sort: 1
       childrenCategory:
         Processeur AMD:
