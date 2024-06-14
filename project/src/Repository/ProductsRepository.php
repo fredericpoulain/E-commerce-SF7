@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Products;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,6 +22,25 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function findRandomProduct(): array
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+SELECT products.*, images_products.name as imageName
+FROM products
+join images_products on products.id = images_products.product_id
+ORDER BY RAND()
+LIMIT 8
+            ";
+
+        $resultSet = $conn->executeQuery($sql);
+        return $resultSet->fetchAllAssociative();
+    }
     //    /**
     //     * @return Products[] Returns an array of Products objects
     //     */
