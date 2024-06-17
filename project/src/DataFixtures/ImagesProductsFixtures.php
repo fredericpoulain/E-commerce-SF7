@@ -20,10 +20,13 @@ class ImagesProductsFixtures extends Fixture implements DependentFixtureInterfac
     {
         $numberProducts = $this->numberProductsFixtures->getNumber();
         for ($i=1; $i<$numberProducts; $i++) {
-            $image = new ImagesProducts();
-            $image->setName('product-thumb-'. $i . '.png');
-            $image->setProduct($this->getReference('prod-' . $i));
-            $manager->persist($image);
+            for ($j=1; $j<=3; $j++ ){
+                $image = new ImagesProducts();
+                $image->setName('product-thumb-'. $i . '-' . $j .'.png');
+                $image->setProduct($this->getReference('prod-' . $i));
+                $manager->persist($image);
+            }
+
         }
         $manager->flush();
     }

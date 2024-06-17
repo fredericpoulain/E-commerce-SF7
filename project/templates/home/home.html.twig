@@ -21,7 +21,7 @@
                         <p>{{ product.price|round }} €</p>
                     </div>
                     <div>
-                        <a href=""><button>Détail</button></a>
+                        <a href="{{ path('app_products', {slug:product.slug}) }}"><button>Détail</button></a>
                     </div>
                 </div>
             {% endfor %}
@@ -36,7 +36,7 @@
         <div class="listcategorys">
             {% for key1, value1 in globalDataCategory %}
                 <div class="blocCardCategory">
-                    <a href="">
+                    <a href="{{ path('app_categorys', {slug:value1.slug}) }}">
                         <div class="cardCategorys">
                             <div class="cardCategoryHeader">
                                 <img src="{{ asset('images/categories/category-thumb.png') }}" alt="Image d'une catégories"/>

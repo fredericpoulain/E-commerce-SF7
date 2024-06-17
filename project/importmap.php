@@ -20,6 +20,14 @@ return [
         'path' => './assets/js/home.js',
         'entrypoint' => true,
     ],
+    'productsList' => [
+        'path' => './assets/js/productsList.js',
+        'entrypoint' => true,
+    ],
+    'productsDetails' => [
+        'path' => './assets/js/productsDetails.js',
+        'entrypoint' => true,
+    ],
     'login' => [
         'path' => './assets/js/login.js',
         'entrypoint' => true,

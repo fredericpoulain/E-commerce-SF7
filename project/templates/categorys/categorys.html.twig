@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block importmap %}
+    {{ importmap(['app', 'home']) }}
+{% endblock %}
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
@@ -15,34 +17,31 @@
             {{ dump(prod) }}
          {% endfor %}
     #}
-
-    <div class="">
+<section class="sectionHomeCardsCategorys">
+    <div class="titleCategorys">
         <h1>{{ category.name }}</h1>
     </div>
-    {#    {% for prod in category.categories %}#}
-    {#       {{ dump(prod.products) }}#}
-    {#        {% if prod.products.isEmpty %}#}
-    {#             La catégorie ne contient aucun produit#}
-    {#        {% else %}#}
-    {#             La catégorie contient des produits#}
-    {#        {% endif %}#}
-    {#    {% endfor %}#}
+
     <div class="">
 
         {% for subCat in category.categories %}
-            <a href=""
-               class="">
-                <div class="">
-                        <img class="" src="{{ asset('images/categories/category-thumb.png') }}" alt="Image d'une catégorie">
-                    <div class="card-body p-4">
-                        <p>{{ subCat.name }}</p>
+            <div class="blocCardCategory">
+{#                <a href="{{ path('app_productsList', {slug:subCat.slug}) }}">#}
+                <a href="{{ path('app_categorys', {slug:subCat.slug}) }}">
+                    <div class="cardCategorys">
+                        <div class="cardCategoryHeader">
+                            <img src="{{ asset('images/categories/category-thumb.png') }}"
+                                 alt="Image d'une catégories"/>
+                        </div>
+                        <div class="cardCategoryTitle">
+                            <h3>{{ subCat.name }}</h3>
+                        </div>
                     </div>
-                </div>
-            </a>
-
+                </a>
+            </div>
 
         {% endfor %}
 
     </div>
-
+</section>
 {% endblock %}
