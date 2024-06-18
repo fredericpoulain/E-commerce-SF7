@@ -19,6 +19,13 @@
     --orange1b: #e1941b;
     --green1: #2def34;
     --green2: #66ba6a;
+    --errorColor: #d75966;
+    --errorBackgroundColor: #d75966;
+    --errorTextColor: #230a0d;
+    --successColorText: #0e3b23;
+    --successBackgroundColor: #27db7c;
+    --infoColorText: #09314a;
+    --infoBackgroundColor: #68aad5;
 }
 
 /*font-family: 'Archivo Black', sans-serif;*/
@@ -394,13 +401,51 @@ footer {
     justify-content: center;
 }
 
-/*.card {*/
-/*    background-color: var(--backgroundPrimary1);*/
-/*    color: var(--white1);*/
-/*    padding: 10px;*/
-/*}*/
+/* ********** MESSAGES FLASH ************ */
+.blocMessageFlash {
+    width: 100%;
+    max-width: 950px;
+    margin: 20px auto 10px;
+
+}
+
+.MessageFlash {
+    margin-bottom: 10px;
+    padding: 10px 30px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.hideFlashMessage {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    padding: 6px 10px;
+}
+
+.successMessageFlash {
+    color: var(--successColorText);
+    background-color: var(--successBackgroundColor);
+    text-align: center;
+}
+
+.errorMessageFlash {
+    color: var(--errorTextColor);
+    background-color: var(--errorBackgroundColor);
+    text-align: center;
+}
+
+.infoMessageFlash {
+    color: var(--infoColorText);
+    background-color: var(--infoBackgroundColor);
+    text-align: center;
+}
 
 @media screen and (min-width: 1080px) {
+    button{
+        cursor: pointer;
+    }
     .burgerMenu {
         display: none;
     }
@@ -488,6 +533,8 @@ footer {
         background-color: var(--backgroundPrimary1);
         padding-left: 0;
         width: 250px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 
     .sousMenuDesktop ul {

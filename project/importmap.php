@@ -32,6 +32,14 @@ return [
         'path' => './assets/js/login.js',
         'entrypoint' => true,
     ],
+    'account' => [
+        'path' => './assets/js/account/account.js',
+        'entrypoint' => true,
+    ],
+    'deleteAddress' => [
+        'path' => './assets/js/account/details/deleteAddress.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

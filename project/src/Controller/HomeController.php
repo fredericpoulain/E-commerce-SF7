@@ -17,7 +17,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProductsRepository $productsRepository): Response
     {
-
+        $user = $this->getUser();
+        if (!is_null($user) && !$user->getIsVerified()){
+            $link = "<a href='/renvoi-verification/' style='text-decoration: underline'>CE LIEN</a>";
+            $this->addFlash('infoMessageFlash', "Votre compte n'est pas encore activé. cliquez sur " . $link . " pour recevoir un nouveau mail de validation");
+        }
         $randProducts = $productsRepository->findRandomProduct();
 //        $categories = $categorieRepository->findAll();
         return $this->render('home/home.html.twig', [

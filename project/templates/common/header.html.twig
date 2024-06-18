@@ -20,13 +20,13 @@
                         <div class="profilMenuDesktop">
                                 <ul>
                                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                                <a href=""><li>Mon compte</li></a>
+                                                <a href="{{ path('app_informations') }}"><li>Mon compte</li></a>
                                                 <hr>
-                                                <a href=""><li>Déconnexion</li></a>
+                                                <a href="{{ path('app_logout') }}"><li>Déconnexion</li></a>
                                         {% else %}
-                                                <a href=""><li>Connexion</li></a>
+                                                <a href="{{ path('app_login') }}"><li>Connexion</li></a>
                                                 <hr>
-                                                <a href=""><li>Inscription</li></a>
+                                                <a href="{{ path('app_register') }}"><li>Inscription</li></a>
                                         {% endif %}
                                 </ul>
                         </div>
@@ -59,13 +59,13 @@
                 <div class="divCloseprofilMenu"><i class="fa-solid fa-xmark"></i></div>
                 <ul>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <li><a href="">Mon compte</a></li>
+                                <li><a href="{{ path('app_informations') }}">Mon compte</a></li>
                                 <hr>
-                                <li><a href="">Déconnexion</a></li>
+                                <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
                         {% else %}
-                                <li><a href="">Connexion</a></li>
+                                <li><a href="{{ path('app_login') }}">Connexion</a></li>
                                 <hr>
-                                <li><a href="">Inscription</a></li>
+                                <li><a href="{{ path('app_register') }}">Inscription</a></li>
                         {% endif %}
                 </ul>
         </div>

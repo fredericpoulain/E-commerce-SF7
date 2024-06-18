@@ -14,7 +14,7 @@
 
             {% for product in products %}
                 <div class="blocLinkProduct">
-                    <a href="">
+                    <a href="{{ path('app_products', {slug:product.slug}) }}">
                         <div class="linkProductPage">
                             <div class="linkProductPageImage">
                                 <img src="{{ asset('images/products/product-thumb.png') }}">

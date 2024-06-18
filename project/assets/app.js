@@ -29,7 +29,9 @@ const searchDeleteInputMobile = document.querySelector(".searchDeleteInputMobile
 if (window.matchMedia("(max-width: 1080px)").matches){
 
     [headerTop_right_profil, divCloseprofilMenu].forEach(element =>{
+
         element.addEventListener('click', () => {
+            burgerMenu.classList.remove("activeSpan");
             headerSearchOverlay.classList.remove('headerSearchOverlayActive');
             headerMenuOverlay.classList.remove("headerMenuOverlayActive");
             profilMenuMobile.classList.toggle('profilMenuMobileActive');
@@ -153,3 +155,9 @@ headerSearchDesktop.addEventListener('click', () => {
 
 })
 
+
+// MESSAGES FLASH
+
+document.querySelectorAll('.hideFlashMessage').forEach(icon => {
+    icon.addEventListener('click', () => icon.parentNode.style.display = "none");
+});
