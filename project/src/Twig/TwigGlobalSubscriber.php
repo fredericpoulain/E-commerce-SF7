@@ -42,7 +42,6 @@ readonly class TwigGlobalSubscriber implements EventSubscriberInterface
                 $children = $this->groupedCategory($categories, $category['id']);
                 $output[$category['name']] = [
                     'description' => $category['description'],
-                    'sort' => $category['sort'],
                     'slug' => $category['slug'],
                     'nameImage' => $category['nameImage'],
                     'childrenCategory' => $children

@@ -40,8 +40,6 @@ class Categories
     #[ORM\OneToMany(targetEntity: Products::class, mappedBy: 'category')]
     private Collection $products;
 
-    #[ORM\Column]
-    private ?int $sort = null;
 
     #[ORM\OneToOne(mappedBy: 'category', cascade: ['persist', 'remove'])]
     private ?ImagesCategories $imagesCategories = null;
@@ -165,17 +163,7 @@ class Categories
         return $this;
     }
 
-    public function getSort(): ?int
-    {
-        return $this->sort;
-    }
 
-    public function setSort(int $sort): static
-    {
-        $this->sort = $sort;
-
-        return $this;
-    }
 
     public function getImagesCategories(): ?ImagesCategories
     {
@@ -192,5 +180,10 @@ class Categories
         $this->imagesCategories = $imagesCategories;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

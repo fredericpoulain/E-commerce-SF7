@@ -59,7 +59,6 @@ class CategoriesFixtures extends Fixture
             $category->setName($name);
             $category->setSlug($this->slugger->slug($category->getName())->lower());
             $category->setDescription($data['description']);
-            $category->setSort($data['sort']);
 
             //si la catégorie n'a pas de parent, c'est ici que l'on va ajouter une référence
             // pour l'association des produits. un produit sera associé à la "dernière catégorie" dans la hiérarchie.
@@ -84,26 +83,3 @@ class CategoriesFixtures extends Fixture
     }
 }
 
-//Catégorie : PC tour
-//Catégorie : PC portable gamer
-//Catégorie : Portable Mac
-//Catégorie : Sacoche portable
-
-//Catégorie : Tablette
-//Catégorie : Processeur AMD
-//Catégorie : Processeur INTEL
-//Catégorie : Ram DDR4
-
-//Catégorie : Ram DDR5
-//Catégorie : Carte graphique
-//Catégorie : disque SSD
-//Catégorie : disque M2
-
-//Catégorie : Disque dur magnetite
-//Catégorie : Clé USB
-//Catégorie : Carte mère
-//Catégorie : Écran PC
-
-//Catégorie : Clavier
-//Catégorie : Souris
-//Catégorie : Imprimantes
