@@ -20,10 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class AccountController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
+    public function __construct(private readonly EmailVerifier $emailVerifier)
     {
     }
     #[Route('/informations', name: 'app_informations')]
@@ -36,7 +38,10 @@ class AccountController extends AbstractController
         UsersRepository              $usersRepository
     ): Response
     {
+
         $user = $this->getUser();
+
+
         /* **Formulaire informations** */
 
         //on génère le formulaire
@@ -51,24 +56,7 @@ class AccountController extends AbstractController
 
             if ($oldEmail !== $formInfosUser->get('email')->getData()) {
 
-//                $header = [
-//                    'typ' => 'JWT',
-//                    'alg' => 'HS256'
-//                ];
-//                // On crée le Payload
-//                $payload = [
-//                    'user_id' => $user->getId()
-//                ];
-//                // On génère le token
-//                $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtkey'));
-//
-//                $mailService->send(
-//                    'no-reply@monsite.net',
-//                    $user->getEmail(),
-//                    'Activation de votre compte sur le site e-commerce',
-//                    'modifyEmail',
-//                    compact('user', 'token')
-//                );
+
                 $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                     (new TemplatedEmail())
                         ->from(new Address('inscription@monsite.com', 'Inscription'))

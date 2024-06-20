@@ -42,6 +42,9 @@ body {
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden;
     background-color: var(--backgroundPrimary3);
+
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 
 }
@@ -399,6 +402,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-top: auto;
 }
 
 /* ********** MESSAGES FLASH ************ */
