@@ -20,7 +20,23 @@ class ImagesProductsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ImagesProducts::class);
     }
+    public function save(ImagesProducts $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(ImagesProducts $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
     //    /**
     //     * @return ImagesProducts[] Returns an array of ImagesProducts objects
     //     */

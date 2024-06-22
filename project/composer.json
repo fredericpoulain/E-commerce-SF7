@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "easycorp/easyadmin-bundle": "^4.10",
         "fakerphp/faker": "^1.23",
         "knplabs/knp-paginator-bundle": "^6.4",
         "phpdocumentor/reflection-docblock": "^5.4",
@@ -46,7 +47,8 @@
         "symfony/yaml": "7.0.*",
         "symfonycasts/verify-email-bundle": "^1.17",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.3"
     },
     "config": {
         "allow-plugins": {

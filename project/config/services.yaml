@@ -6,6 +6,8 @@
 parameters:
     categoriesFixtures: '%kernel.project_dir%/config/datasFixtures/categoriesFixtures.yaml'
     productsFixtures: '%kernel.project_dir%/config/datasFixtures/productsFixtures.yaml'
+    categories_images: '%kernel.project_dir%/public/images/categories'
+    products_images: '%kernel.project_dir%/public/images/products'
 services:
     # default configuration for services in *this* file
     _defaults:

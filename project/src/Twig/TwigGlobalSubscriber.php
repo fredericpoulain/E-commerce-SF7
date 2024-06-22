@@ -24,8 +24,7 @@ readonly class TwigGlobalSubscriber implements EventSubscriberInterface
     {
         //requête sql :
         $data = $this->entityManager->getConnection()
-            ->executeQuery('SELECT categories.*, images_categories.name AS nameImage FROM categories 
-        JOIN images_categories on categories.id = images_categories.category_id ')
+            ->executeQuery('SELECT categories.* FROM categories')
             ->fetchAllAssociative();
 
         $dataCategory = $this->groupedCategory($data, null);
@@ -43,7 +42,7 @@ readonly class TwigGlobalSubscriber implements EventSubscriberInterface
                 $output[$category['name']] = [
                     'description' => $category['description'],
                     'slug' => $category['slug'],
-                    'nameImage' => $category['nameImage'],
+                    'nameImage' => $category['file'],
                     'childrenCategory' => $children
                 ];
             }

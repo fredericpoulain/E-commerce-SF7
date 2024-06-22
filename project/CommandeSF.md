@@ -86,3 +86,9 @@ composer require symfonycasts/tailwind-bundle
 php bin/console tailwind:init
 php bin/console tailwind:build --watch
 ```
+# donner les droits depuis le container
+```bash
+chmod -R 775 /var/www/project/...
+chown -R www-data:www-data /var/www/project/...
+```
+

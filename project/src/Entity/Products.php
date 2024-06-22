@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
+
 class Products
 {
     #[ORM\Id]
@@ -16,6 +18,8 @@ class Products
     #[ORM\Column]
     private ?int $id = null;
 
+//    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'file')]
+//    private ?File $imageFile = null;
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -44,7 +48,7 @@ class Products
     /**
      * @var Collection<int, ImagesProducts>
      */
-    #[ORM\OneToMany(targetEntity: ImagesProducts::class, mappedBy: 'product', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ImagesProducts::class, mappedBy: 'product', orphanRemoval: true, cascade: ['persist'])]
     private Collection $images;
 
     public function __construct()
@@ -89,7 +93,7 @@ class Products
 
     public function setPrice(float $price): static
     {
-        $this->price = $price;
+        $this->price = $price * 100;
 
         return $this;
     }

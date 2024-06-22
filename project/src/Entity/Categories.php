@@ -7,15 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+#[Vich\Uploadable]
 class Categories
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'categories', fileNameProperty: 'file')]
+    private ?File $imageFile = null;
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -40,14 +47,36 @@ class Categories
     #[ORM\OneToMany(targetEntity: Products::class, mappedBy: 'category')]
     private Collection $products;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $file = null;
 
-    #[ORM\OneToOne(mappedBy: 'category', cascade: ['persist', 'remove'])]
-    private ?ImagesCategories $imagesCategories = null;
+    #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeImmutable $createdAt = null;
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->createdAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
+
+
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -165,25 +194,34 @@ class Categories
 
 
 
-    public function getImagesCategories(): ?ImagesCategories
-    {
-        return $this->imagesCategories;
-    }
 
-    public function setImagesCategories(ImagesCategories $imagesCategories): static
-    {
-        // set the owning side of the relation if necessary
-        if ($imagesCategories->getCategory() !== $this) {
-            $imagesCategories->setCategory($this);
-        }
-
-        $this->imagesCategories = $imagesCategories;
-
-        return $this;
-    }
 
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): static
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
