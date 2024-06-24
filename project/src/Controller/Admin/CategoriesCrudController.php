@@ -55,10 +55,11 @@ class CategoriesCrudController extends AbstractCrudController
                 ->hideOnIndex(),
 //            TextField::new('slug')
 //                ->hideOnIndex(),
+
             ChoiceField::new('catParent')
                 ->setLabel('Catégorie parente')
                 ->setChoices($hierarchicalCategories)
-                ->hideOnIndex(),
+                ->hideOnIndex()->hideOnDetail(),
 
             textField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
             ImageField::new('file')->setLabel('Image')->setBasePath('/images/categories')->onlyOnIndex(),
@@ -71,7 +72,6 @@ class CategoriesCrudController extends AbstractCrudController
     private function getHierarchicalCategories($currentCategory): array
     {
         $idCurrentCategory = $currentCategory?->getId();
-
         $categories = $this->categoriesRepository->findTopLevelCategories();
 
         $hierarchicalCategories = [];

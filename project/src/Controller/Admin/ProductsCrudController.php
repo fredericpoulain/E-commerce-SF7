@@ -24,7 +24,7 @@ class ProductsCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly CategoriesRepository $categoriesRepository,
-        private readonly EntityManagerInterface $entityManager
+//        private readonly EntityManagerInterface $entityManager
 
     )
     {
@@ -60,15 +60,6 @@ class ProductsCrudController extends AbstractCrudController
             }),
 
             SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
-            //ajout d'un champ pour sélectionner la catégorie de l'article
-//            AssociationField::new('category')
-//                ->setLabel('Catégorie')
-//                ->setFormTypeOptions([
-//                    'by_reference' => false,
-//                    'class' => Categories::class,
-//                    'choice_label' => 'name',
-//                    'choices' => $lowLevelCategoryChoices,
-//                ]),
             AssociationField::new('category')->onlyOnIndex()->setLabel(' Catégorie'),
             IntegerField::new('stock')->setLabel('Stock'),
             ChoiceField::new('category')
@@ -78,15 +69,6 @@ class ProductsCrudController extends AbstractCrudController
             CollectionField::new('images')
                 ->hideOnIndex()
                 ->setEntryType(ProductsImagesType::class)
-//            CollectionField::new('images')
-//                ->setEntryType(VichImageType::class)
-//                ->setFormTypeOptions([
-//                    'by_reference' => false,
-//                    'allow_add' => true,
-//                    'allow_delete' => true,
-//                ])
-
-
 
         ];
     }
