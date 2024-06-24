@@ -99,6 +99,38 @@
     font-weight: bold;
 }
 
+.paginator{
+    text-align: center;
+}
+.paginator button{
+    border: none;
+    border-radius: 10px;
+    background-color: var(--backgroundPrimary2);
+    color: var(--white1);
+
+    font-size: 18px;
+}
+.pagination button{
+    /*border-radius: 5px;*/
+
+}
+.pagination a{
+    display: inline-block;
+    width: 35px;
+    margin-right: 4px;
+    margin-left: 4px;
+    /*padding: 5px 10px;*/
+}
+.pagination button{
+    width: 45px;
+}
+.pagination .current{
+    border-color: var(--backgroundPrimary2);
+    color: var(--white1);
+}
+
+
+
 @media screen and (min-width: 500px){
     .blocLinkProduct{
         width: 90%;
@@ -116,5 +148,8 @@
 
     .linkProductPageDetails{
         width: 80%;
+    }
+    .paginator button{
+        font-size: 26px;
     }
 }
