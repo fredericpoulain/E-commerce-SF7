@@ -24,7 +24,7 @@ class DashboardController extends AbstractDashboardController
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
-    #[Route('/admin', name: 'admin')]
+    #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
 //        return parent::index();
