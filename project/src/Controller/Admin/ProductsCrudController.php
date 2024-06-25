@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -55,10 +56,8 @@ class ProductsCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name')->setLabel('Nom du produit'),
             TextEditorField::new('description')->setLabel('Description')->hideOnIndex(),
-            MoneyField::new('price')->setLabel('Prix')->setCurrency('EUR')->formatValue(function ($value) {
-                return $value / 100;
-            }),
-
+            MoneyField::new('price')
+                ->setLabel('Prix')->setCurrency('EUR'),
             SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
             AssociationField::new('category')->onlyOnIndex()->setLabel(' Catégorie'),
             IntegerField::new('stock')->setLabel('Stock'),

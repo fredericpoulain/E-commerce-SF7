@@ -5,6 +5,7 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
+    {% include 'common/breadcrumb.html.twig' %}
     <div class="pageTitle">
         <a href=""><h1>{{ title }}</h1></a>
     </div>
@@ -23,7 +24,7 @@
                                 <p class="productName">{{ product.name }}</p>
                                 <p class="productDesc">{{ product.description | raw }}</p>
                                 <div class="PriceStock">
-                                    <p>{{ product.price }} €</p>
+                                    <p>{{ product.price / 100}} €</p>
                                     <p>{% if product.stock > 5 %}En stock{% elseif product.stock > 0 %}Stock limité{% else %}Rupture{% endif %}</p>
                                 </div>
                             </div>

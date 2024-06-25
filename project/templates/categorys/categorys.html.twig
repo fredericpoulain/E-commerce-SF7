@@ -5,18 +5,7 @@
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
-
-    {# l'objet $categorie du "render" ne peut pas s'afficher simplement.
-    - pour afficher l'objet en tant que tel : {{dump(category)}}
-    - pour afficher la valeur d'une clé : {{ category.NOM_DE_LA_CLE }}. Ex : {{ category.name }}
-    - SI la clé est une collection : exemple dans le {{dump(category)}} ---> -categories: Doctrine\ORM\PersistentCollection {#571 ▶}
-        ALORS il faut obligatoirement boucler sur "category.categories" : {% for nom_de_variable in category.categories %}
-        Car si on fait {{dump(category.categories)}}, on n'obtiendra pas grand chose, et on peut pas acceder au contenu de la collection
-        et donc on peut faire cela :
-         {% for prod in category.categories %}
-            {{ dump(prod) }}
-         {% endfor %}
-    #}
+    {% include 'common/breadcrumb.html.twig' %}
 <section class="sectionHomeCardsCategorys">
     <div class="titleCategorys">
         <h1>{{ category.name }}</h1>

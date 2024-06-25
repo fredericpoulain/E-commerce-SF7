@@ -3,7 +3,6 @@
     <div class="pagination">
                 {% if first is defined and current != first %}
                     <span class="first">
-{#                        <a href="{{ path(route, query|merge({(pageParameterName): first})) }}"><button>&lt;&lt;</button></a>#}
                         <a href="{{ path(route, query|merge({(pageParameterName): first})) }}"><button><i class="fa-solid fa-backward-fast"></i></button></a>
                     </span>
                 {% endif %}
@@ -11,7 +10,6 @@
         {% if previous is defined %}
 
             <a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
-{#                <button class="previous">&lt;</button>#}
                 <button class="previous"><i class="fa-solid fa-caret-left"></i></button>
             </a>
 
@@ -32,7 +30,6 @@
         {% if next is defined %}
 
             <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
-{#                <button class="next">&gt;</button>#}
                 <button class="next"><i class="fa-solid fa-caret-right"></i></button>
             </a>
 
@@ -40,7 +37,6 @@
 
                 {% if last is defined and current != last %}
                     <span class="last">
-{#                        <a href="{{ path(route, query|merge({(pageParameterName): last})) }}"><button>&gt;&gt;</button></a>#}
                         <a href="{{ path(route, query|merge({(pageParameterName): last})) }}"><button><i class="fa-solid fa-forward-fast"></i></button></a>
                     </span>
                 {% endif %}

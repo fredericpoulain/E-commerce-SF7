@@ -27,7 +27,7 @@ class Products
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?float $price = null;
+    private ?int $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
@@ -86,14 +86,14 @@ class Products
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(int $price): static
     {
-        $this->price = $price * 100;
+        $this->price = $price;
 
         return $this;
     }

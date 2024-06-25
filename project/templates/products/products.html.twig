@@ -18,7 +18,7 @@
                 <div class="bodyProduct">
                     <p class="productDesc">{{ product.description | raw }}</p>
                     <div class="PriceStock">
-                        <p>{{ product.price }} €</p>
+                        <p>{{ product.price / 100}} €</p>
                         <p>{% if product.stock > 5 %}En stock{% elseif product.stock > 0 %}Stock limité{% else %}Rupture{% endif %}</p>
                     </div>
                 </div>

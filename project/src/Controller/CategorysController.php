@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Repository\ProductsRepository;
+use App\Service\BreadcrumbService;
 use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,17 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class CategorysController extends AbstractController
 {
     #[Route('/categorie/{slug}', name: 'app_categorys')]
-    public function index(Categories $categories): Response
+    public function index(Categories $categories, BreadcrumbService $breadcrumbService): Response
     {
-        $catParent = $categories->getCatParent();
 
-//        //Si c'est une catégorie principale
-//        if (is_null($catParent)){
-//            return $this->render('categorys/categorys.html.twig', [
-//                'category' => $categories,
-//            ]);
-//        }
-//        return $this->redirectToRoute('app_home');
+        $dataBreadcrumb = $breadcrumbService->getData($categories);
+
         $productsListContainsItems = !empty($categories->getProducts()->toArray());
         if ($productsListContainsItems){
             return $this->redirectToRoute('app_productsList', [
@@ -33,7 +28,8 @@ class CategorysController extends AbstractController
         }
         return $this->render('categorys/categorys.html.twig', [
             'category' => $categories,
-            'productsListContainsItems' => $productsListContainsItems
+            'productsListContainsItems' => $productsListContainsItems,
+            'dataBreadcrumb' => $dataBreadcrumb,
         ]);
 
     }
@@ -41,7 +37,8 @@ class CategorysController extends AbstractController
     public function productsList(
         Categories              $categories,
         Request                $request,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        BreadcrumbService $breadcrumbService
 
     ): Response
     {
@@ -50,7 +47,7 @@ class CategorysController extends AbstractController
         //Récupération de la valeur de "page" dans l'URL. Si non-présente, 1 par défaut
         $page = $request->query->getInt('page', 1);
         //On fixe une limite de 4 projets par page
-        $limit = 4;
+        $limit = 8;
         //On récupère les products paginés via KNP_Paginator
         $productsPaginated =  $paginator->paginate(
             $products,
@@ -60,12 +57,14 @@ class CategorysController extends AbstractController
         //page maximale : nombreDeProjets / limiteParPage → arrondi au supérieur.
         $maxPage = ceil($productsPaginated->getTotalItemCount() / $limit);
         //si on tente d'accéder à une page supérieure à la page maximale, on redirige.
-        if ($page > $maxPage) return $this->redirectToRoute('app_productsList');
 
+//        if ($page > $maxPage) return $this->redirectToRoute('app_productsList', ['slug' => $categories->getSlug()]);
 
+        $dataBreadcrumb = $breadcrumbService->getData($categories);
         return $this->render('categorys/productsList.html.twig', [
             'title' => $categories->getName(),
-            'products' => $productsPaginated
+            'products' => $productsPaginated,
+            'dataBreadcrumb' => $dataBreadcrumb,
         ]);
     }
 
