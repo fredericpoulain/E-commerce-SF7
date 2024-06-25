@@ -101,4 +101,12 @@ Périphériques:
     Imprimantes:
       description: 'Catégorie des imprimantes.'
       image: 'image_category.png'
-      childrenCategory: null
+      childrenCategory:
+        Imprimante laser:
+          description: 'Catégorie des imprimantes laser.'
+          image: 'image_category.png'
+          childrenCategory: null
+        Imprimante jet d'encre:
+          description: 'Catégorie des imprimantes jet d''encre.'
+          image: 'image_category.png'
+          childrenCategory: null

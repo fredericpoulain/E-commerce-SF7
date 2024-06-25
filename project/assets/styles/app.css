@@ -447,7 +447,15 @@ footer {
     text-align: center;
 }
 
+/*File d'Ariane : */
+.lastCatBreadcrumb{
+    display: none
+}
 @media screen and (min-width: 1080px) {
+    /*File d'Ariane : */
+    .lastCatBreadcrumb{
+        display: initial;
+    }
     button{
         cursor: pointer;
     }

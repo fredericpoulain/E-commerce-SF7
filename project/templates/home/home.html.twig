@@ -18,7 +18,7 @@
                     </div>
                     <div>
                         <h5>{{ product.name }}</h5>
-                        <p>{{ product.price|round }} €</p>
+                        <p>{{ product.price / 100}} €</p>
                     </div>
                     <div>
                         <a href="{{ path('app_products', {slug:product.slug}) }}"><button>Détail</button></a>
