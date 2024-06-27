@@ -2,6 +2,9 @@
 {% block bodyAccount %}
     <div class="titleBloc">
         <h1>Mes commandes en cours</h1>
+        {% for order in orders %}
+        {{ dump(order) }}
+        {% endfor %}
     </div>
 
 {% endblock %}

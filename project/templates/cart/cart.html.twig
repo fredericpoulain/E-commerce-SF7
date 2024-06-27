@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block importmap %}
+    {{ importmap(['app', 'cart']) }}
+{% endblock %}
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="titleBloc">
+            <h1>Mon panier</h1>
+        </div>
+        <section>
+
+            {% if dataCart is not empty %}
+                <div class="productsList">
+                    <ul>
+                        {% for productData in dataCart %}
+                            <li>
+                                <div class="imageProduct">
+{#                                    {% for image in productData.product.images %}#}
+{#                                        {% if loop.first %}#}
+{#                                            {{ image.name }}#}
+{#                                            <img src="path/{{ image.name }}" alt="Image de l'article">#}
+{#                                        {% endif %}#}
+{#                                    {% endfor %} #}
+                                    <img src="https://placehold.co/60x60" alt="Image de l'article">
+                                </div>
+                                <div class="infosProduct">
+                                    <div class="infosProductTitle">
+                                        <h4>{{ productData.product.name }}</h4>
+                                        {% if  productData.product.stock == 0 %}
+                                            <span>Rupture</span>
+                                        {% elseif productData.product.stock < 5 %}
+                                            <span>Quantité limité</span>
+                                        {% else %}
+                                            <span>En stock</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="quantity">
+                                        <div class="quantitySelect">
+                                            <a href="{{ path('app_cart_remove', {id:productData.product.id}) }}"
+                                               class="quantityLink">
+                                                <button><i class="fa-solid fa-minus"></i></button>
+                                            </a>
+                                            <span class="quantityText">{{ productData.quantity }}</span>
+                                            <a href="{{ path('app_cart_add', {id:productData.product.id}) }}"
+                                               class="quantityLink">
+                                                <button><i class="fa-solid fa-plus"></i></button>
+                                            </a>
+                                        </div>
+                                        <div class="quantityPrice">
+                                            <span>{{ (productData.product.price * productData.quantity) / 100 }} €</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="delete">
+                                    <a href="{{ path('app_cart_delete', {id:productData.product.id}) }}"><i
+                                                class="fa-solid fa-xmark"></i></a>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+
+                    </ul>
+
+                </div>
+                <div class="cartSummary">
+                    <div class="totalPrice">
+                        <h4>Total : &nbsp;<span>{{ total / 100 }} €</span></h4>
+                        <h6>Dont TVA : &nbsp;<span>{{ (total / 100) * 0.20 }} €</span></h6>
+                    </div>
+                    <div class="placeOrder">
+                        <a href="{{ path('app_orders_add') }}">
+                            Passer commande
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="titleBloc">
+                    <h3>Panier vide</h3>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+
+{% endblock %}

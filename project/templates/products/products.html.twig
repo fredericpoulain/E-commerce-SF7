@@ -23,7 +23,8 @@
                     </div>
                 </div>
                 <div class="productFooter">
-                    <button>Ajouter au panier</button>
+                    <a href="{{ path('app_cart_add', {id: product.id}) }}"><button>Ajouter au panier</button></a>
+
                 </div>
             </div>
         </section>

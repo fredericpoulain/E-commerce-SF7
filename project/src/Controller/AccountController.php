@@ -104,21 +104,17 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/commandes', name: 'app_currentOrder')]
+    #[Route('/commandes', name: 'app_order_account')]
     public function currentOrder(): Response
     {
-        return $this->render('account/pages/currentOrder.html.twig', [
-            'controller_name' => 'AccountController',
+        $user = $this->getUser();
+        $orders = $user->getOrders();
+        return $this->render('account/pages/order.html.twig', [
+            'orders' => $orders,
         ]);
     }
 
-    #[Route('/historique', name: 'app_oldOrders')]
-    public function oldOrders(): Response
-    {
-        return $this->render('account/pages/oldOrders.html.twig', [
-            'controller_name' => 'AccountController',
-        ]);
-    }
+
 
     #[Route('/adresses', name: 'app_addresses')]
     public function addresses(

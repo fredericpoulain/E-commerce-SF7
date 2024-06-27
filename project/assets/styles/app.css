@@ -19,6 +19,7 @@
     --orange1b: #e1941b;
     --green1: #2def34;
     --green2: #66ba6a;
+    --green3: #2b752f;
     --errorColor: #d75966;
     --errorBackgroundColor: #d75966;
     --errorTextColor: #230a0d;
@@ -97,7 +98,7 @@ body a {
     width: 100%;
 }
 
-.headerSearchOverlay,
+/*.headerSearchOverlay,*/
 .headerMenuOverlay {
     background-color: var(--backgroundPrimary3);
     width: 100%;
@@ -115,11 +116,30 @@ body a {
     right: 110%;
 }
 
-.headerSearchOverlayActive,
+/*.headerSearchOverlayActive,*/
 .headerMenuOverlayActive {
     right: 0;
 }
+.headerSearchOverlay{
+    background-color: var(--backgroundPrimary3);
+    width: 100%;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    position: fixed;
+    top: 90px;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    transform: translateX(100vw);
+    visibility: hidden;
 
+
+
+}
+.headerSearchOverlayActive{
+    transform: translateX(0vw);
+    visibility: visible;
+}
 .divInputHeaderSearch {
     position: relative;
     /*display: flex;*/
@@ -405,6 +425,7 @@ footer {
 
     margin-top: auto;
 }
+
 
 /* ********** MESSAGES FLASH ************ */
 .blocMessageFlash {
@@ -692,7 +713,9 @@ footer {
     .headerTop_right_cart:hover {
         color: var(--blueLight1);
     }
-
+    /*.headerSearchOverlay {*/
+    /*    height: 100%;*/
+    /*}*/
 
 
 

@@ -40,6 +40,10 @@ return [
         'path' => './assets/js/account/details/deleteAddress.js',
         'entrypoint' => true,
     ],
+    'cart' => [
+        'path' => './assets/js/cart.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
