@@ -57,7 +57,7 @@ readonly class TwigGlobalSubscriber implements EventSubscriberInterface
         $productsQuantity = 0;
         if ($cartGlobalTwig){
             foreach ($cartGlobalTwig as $item => $quantity){
-                $productsQuantity += $quantity;
+                $productsQuantity += intval($quantity);
             }
         }
         $this->twig->addGlobal('productsQuantity', $productsQuantity);

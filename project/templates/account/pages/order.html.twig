@@ -1,10 +1,35 @@
 {% extends 'account/index.html.twig' %}
+{% block importmap %}
+    {{ importmap(['app', 'account']) }}
+{% endblock %}
 {% block bodyAccount %}
     <div class="titleBloc">
-        <h1>Mes commandes en cours</h1>
-        {% for order in orders %}
-        {{ dump(order) }}
-        {% endfor %}
+        <h1>Mes commandes</h1>
+
+        <div class="ordersTable">
+            <table>
+                <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Date</th>
+                    <th>Montant</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in datasOrders %}
+                    <tr>
+                        <td><a href="{{ path('app_orderDetails_account', {reference: order.reference }) }}">{{ order.reference }}</a></td>
+                        <td> {{ order.orderDate.format('d/m/Y') }}</td>
+                        <td>{{ order.totalPrice / 100 }} €</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
 
 {% endblock %}
+

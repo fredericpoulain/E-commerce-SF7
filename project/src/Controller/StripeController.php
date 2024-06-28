@@ -45,8 +45,8 @@ class StripeController extends AbstractController
         $sessionStripe = Session::create([
             //mode ici ce sera un paiment. si on choisi subscription, c'est pour démarrer un abonnement
             'mode' => 'payment',
-            'success_url' => 'http://127.0.0.1:8000/commandes/ajout',
-            'cancel_url' => 'http://127.0.0.1:8000/commandes/cancel',
+            'success_url' => 'http://127.0.0.1:8000/orders/add',
+            'cancel_url' => 'http://127.0.0.1:8000/orders/cancel',
             //si notre application ne gère pas en amont les adresses de livraisons et facturation, on peut demander à stripe de récupérer ces informations.
             //Ensuite on pourra récupérer ces adresses pour gérer la livraison et la facture
 //            'billing_address_collection' => 'required',

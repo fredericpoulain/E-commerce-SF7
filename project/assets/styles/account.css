@@ -180,6 +180,24 @@ hr{
     transform: translate(-50%, -50%);
 }
 
+/*COMMANDES*/
+
+.ordersTable table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    text-align: center;
+    border: 1px solid;
+}
+td, th, td a {
+    padding: 8px;
+}
+.orderTable tr, .ordersTable th{
+    border-bottom: 1px solid var(--grey1);
+}
+tr:nth-child(even) {
+    background-color: var(--backgroundPrimary2);
+}
 @media screen and (min-width: 600px) {
     .addressInfos{
         display: flex;

@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/commandes', name: 'app_orders_')]
+#[Route('/orders', name: 'app_orders_')]
 class OrdersController extends AbstractController
 {
-    #[Route('/ajout', name: 'add')]
+    #[Route('/add', name: 'add')]
     public function add(
         SessionInterface $session,
         ProductsRepository $productsRepository,
@@ -26,13 +26,14 @@ class OrdersController extends AbstractController
         ShippingAddressesRepository $shippingAddressesRepository,
         BillingAddressesRepository $billingAddressesRepository): Response
     {
+//        dd('ddddd');
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $cart = $session->get('cart', []);
-
+//        dd($cart);
         if ($cart === []) {
             $this->addFlash('message', 'Votre panier est vide');
-            return $this->redirectToRoute('app_currentOrder');
+            return $this->redirectToRoute('app_home');
         }
 
         $user = $this->getUser();
@@ -94,6 +95,12 @@ class OrdersController extends AbstractController
 
         $this->addFlash('infoMessageFlash', 'La commande a été annulée');
         return $this->redirectToRoute('app_home');
+    }
+    #[Route('/ajouter', name: 'ajouter')]
+    public function ajouter(): Response
+    {
+
+        dd('fgfgfg');
     }
 
 }

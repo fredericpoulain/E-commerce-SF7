@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\BillingAddresses;
+use App\Entity\Orders;
+use App\Entity\OrdersDetails;
 use App\Entity\ShippingAddresses;
 use App\Form\BillingAddressesType;
 use App\Form\InfosUserType;
 use App\Form\ModifyPasswordType;
 use App\Form\ShippingAddressesType;
 use App\Repository\BillingAddressesRepository;
+use App\Repository\OrdersDetailsRepository;
 use App\Repository\ShippingAddressesRepository;
 use App\Repository\UsersRepository;
 use App\Security\EmailVerifier;
@@ -105,13 +108,42 @@ class AccountController extends AbstractController
     }
 
     #[Route('/commandes', name: 'app_order_account')]
-    public function currentOrder(): Response
+    public function orders(OrdersDetailsRepository $ordersDetailsRepository): Response
     {
         $user = $this->getUser();
         $orders = $user->getOrders();
+        $datasOrders = [];
+        foreach ($orders as $order) {
+            //je récupère l'id de la commande
+            $id = $order->getId();
+            // Récupération des détails de la commande pour calculer le prix total
+            $orderDetails = $ordersDetailsRepository->findBy(['orders' => $order]);
+            $totalPrice = 0;
+            foreach ($orderDetails as $detail) {
+                $totalPrice += $detail->getPrice() * $detail->getQuantity();
+            }
+//            dd($order->getOrderDate());
+            //on insérère dans "$datasOrders" un array avec la référence + date + prix total de la commande
+            $datasOrders[] = [
+                'reference' => $order->getReference(),
+                'orderDate' => $order->getOrderDate(),
+                'totalPrice' => $totalPrice
+
+            ];
+        }
+
+
+
         return $this->render('account/pages/order.html.twig', [
-            'orders' => $orders,
+            'datasOrders' => $datasOrders,
         ]);
+    }
+
+    #[Route('/commandes/{reference}', name: 'app_orderDetails_account')]
+    public function orderDetails(Orders $orders): Response
+    {
+        dd($orders);
+        return $this->render('account/pages/order.html.twig');
     }
 
 
