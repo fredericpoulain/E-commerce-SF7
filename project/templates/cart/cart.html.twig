@@ -17,12 +17,12 @@
                         {% for productData in dataCart %}
                             <li>
                                 <div class="imageProduct">
-{#                                    {% for image in productData.product.images %}#}
-{#                                        {% if loop.first %}#}
-{#                                            {{ image.name }}#}
-{#                                            <img src="path/{{ image.name }}" alt="Image de l'article">#}
-{#                                        {% endif %}#}
-{#                                    {% endfor %} #}
+                                    {#                                    {% for image in productData.product.images %} #}
+                                    {#                                        {% if loop.first %} #}
+                                    {#                                            {{ image.name }} #}
+                                    {#                                            <img src="path/{{ image.name }}" alt="Image de l'article"> #}
+                                    {#                                        {% endif %} #}
+                                    {#                                    {% endfor %} #}
                                     <img src="https://placehold.co/60x60" alt="Image de l'article">
                                 </div>
                                 <div class="infosProduct">
@@ -59,9 +59,35 @@
                                 </div>
                             </li>
                         {% endfor %}
-
-
                     </ul>
+                    {% if app.user %}
+                        <div class="addresses">
+                            <div class="shipping">
+                                <h2>Livraison</h2>
+                                <h5>Jeannine Da Silva</h5>
+                                <p>
+                                    <span>7, impasse Édouard Royer</span><br>
+                                    <span>80743 Rocher</span><br>
+                                    <span>0637469488</span><br>
+                                </p>
+                            </div>
+                            <div class="billing">
+                                <h2>Facturation</h2>
+                                <h5>Jeannine Da Silva</h5>
+                                <p>
+                                    <span>7, impasse Édouard Royer</span><br>
+                                    <span>80743 Rocher</span><br>
+                                    <span>0637469488</span><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="blocButtonAddresses">
+                            <a class="modifyAddresses" href="{{ path('app_addresses') }}">
+                                Modifier les adresses
+                            </a>
+                        </div>
+
+                    {% endif %}
 
                 </div>
                 <div class="cartSummary">
@@ -70,9 +96,15 @@
                         <h6>Dont TVA : &nbsp;<span>{{ (total / 100) * 0.20 }} €</span></h6>
                     </div>
                     <div class="placeOrder">
-                        <a href="{{ path('app_orders_add') }}">
-                            Passer commande
-                        </a>
+                        {% if app.user %}
+                            <a href="{{ path('app_stripe') }}">
+                                Passer commande
+                            </a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}">
+                                Se connecter
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             {% else %}

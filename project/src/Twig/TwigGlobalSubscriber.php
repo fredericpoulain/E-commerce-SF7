@@ -12,8 +12,8 @@ use Twig\Environment;
 readonly class TwigGlobalSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        Private Environment            $twig,
-        Private EntityManagerInterface $entityManager)
+        private Environment            $twig,
+        private EntityManagerInterface $entityManager)
     {
     }
 
@@ -50,8 +50,27 @@ readonly class TwigGlobalSubscriber implements EventSubscriberInterface
         return $output;
     }
 
+    public function injectGlobalCartSession(ControllerEvent $event): void
+    {
+        $session = $event->getRequest()->getSession();
+        $cartGlobalTwig = $session->get('cart', []);
+        $productsQuantity = 0;
+        if ($cartGlobalTwig){
+            foreach ($cartGlobalTwig as $item => $quantity){
+                $productsQuantity += $quantity;
+            }
+        }
+        $this->twig->addGlobal('productsQuantity', $productsQuantity);
+    }
+
     public static function getSubscribedEvents(): array
     {
-        return [KernelEvents::CONTROLLER => 'injectGlobalDataCategory'];
+//        return [KernelEvents::CONTROLLER => 'injectGlobalDataCategory'];
+        return [
+            KernelEvents::CONTROLLER => [
+                ['injectGlobalDataCategory'],
+                ['injectGlobalCartSession']
+            ],
+        ];
     }
 }

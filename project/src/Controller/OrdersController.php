@@ -56,24 +56,27 @@ class OrdersController extends AbstractController
 
         // On parcourt le panier pour créer les détails de commande
         foreach ($cart as $item => $quantity) {
-            $orderDetails = new OrdersDetails();
+            if (is_int($item)){
+                $orderDetails = new OrdersDetails();
 
-            // On va chercher le produit
-            $product = $productsRepository->find($item);
+                // On va chercher le produit
+                $product = $productsRepository->find($item);
 
-            $price = $product->getPrice();
+                $price = $product->getPrice();
 
-            // On crée le détail de commande
-            $orderDetails->setProducts($product);
-            $orderDetails->setPrice($price);
-            $orderDetails->setQuantity($quantity);
+                // On crée le détail de commande
+                $orderDetails->setProducts($product);
+                $orderDetails->setPrice($price);
+                $orderDetails->setQuantity($quantity);
 
-            $order->addOrdersDetail($orderDetails);
+                $order->addOrdersDetail($orderDetails);
 
-            //Au lieu de "$em->persist($orderDetails);", possibilité d'ajouter cascade: ['persist'] dans l'entité order :
-            // #[ORM\OneToMany(mappedBy: 'orders', targetEntity: OrdersDetails::class, orphanRemoval: true, cascade: ['persist'])]
-            // private $ordersDetails
-            $em->persist($orderDetails);
+                //Au lieu de "$em->persist($orderDetails);", possibilité d'ajouter cascade: ['persist'] dans l'entité order :
+                // #[ORM\OneToMany(mappedBy: 'orders', targetEntity: OrdersDetails::class, orphanRemoval: true, cascade: ['persist'])]
+                // private $ordersDetails
+                $em->persist($orderDetails);
+            }
+
         }
 
         // On persiste et on flush
@@ -83,7 +86,14 @@ class OrdersController extends AbstractController
         $session->remove('cart');
 
         $this->addFlash('successMessageFlash', 'Commande passée avec succès');
-        return $this->redirectToRoute('app_currentOrder');
+        return $this->redirectToRoute('app_order_account');
+    }
+    #[Route('/cancel', name: 'cancel')]
+    public function cancel(): Response
+    {
+
+        $this->addFlash('infoMessageFlash', 'La commande a été annulée');
+        return $this->redirectToRoute('app_home');
     }
 
 }

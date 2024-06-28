@@ -86,9 +86,18 @@ body a {
 .headerTop_right div {
     padding: 10px;
 }
-
+.headerTop_right_cart{
+    position: relative;
+}
+.productsQuantity{
+    position: absolute;
+    right: 5px;
+    top: -13px;
+    color: #000000;
+    font-weight: bold;
+}
 .headerTop_right_profil span,
-.headerTop_right_cart span {
+.headerTop_right_cart span:first-of-type {
     display: none;
 }
 .profilMenuDesktop{
@@ -713,9 +722,15 @@ footer {
     .headerTop_right_cart:hover {
         color: var(--blueLight1);
     }
-    /*.headerSearchOverlay {*/
-    /*    height: 100%;*/
-    /*}*/
+    .productsQuantity{
+        right: 28px;
+        top: 7px;
+        font-size: 24px;
+
+    }
+    .headerTop_right_cart span:first-of-type {
+        display: flex;
+    }
 
 
 

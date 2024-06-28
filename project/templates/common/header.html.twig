@@ -49,6 +49,11 @@
             <a href="{{ path('app_cart_index') }}" class="headerTop_right_cart">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>Mon panier</span>
+                {% if productsQuantity %}
+                    <span class="productsQuantity">
+                    {{ productsQuantity }}
+                    </span>
+                {% endif %}
             </a>
 
             <div class="headerDivSearch">

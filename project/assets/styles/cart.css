@@ -85,6 +85,7 @@
 }
 
 .cartSummary{
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,7 +94,8 @@
 .totalPrice{
     font-size: 26px;
 }
-.placeOrder a{
+.placeOrder a,
+.modifyAddresses{
     background-color: var(--green3);
     font-weight: bold;
     padding: 8px 16px;
@@ -101,11 +103,31 @@
     display: block;
     margin-bottom: 10px;
 }
+.blocButtonAddresses{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.modifyAddresses{
+    width: 200px;
+}
 
 section{
     min-height: 100vh
 }
-
+.addresses{
+    text-align: center;
+}
+.shipping,
+.billing{
+    background-color: var(--backgroundPrimary5);
+    width: 200px;
+    margin: 5px auto 10px;
+    border-radius: 10px;
+    padding: 5px;
+}
 @media screen and (min-width: 440px){
     .productsList li{
         justify-content: flex-start;
@@ -115,6 +137,13 @@ section{
         margin-right: 15px;
     }
 
+}
+@media screen and (min-width: 450px){
+    .addresses{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 @media screen and (min-width: 1080px){

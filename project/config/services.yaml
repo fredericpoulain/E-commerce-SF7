@@ -8,6 +8,9 @@ parameters:
     productsFixtures: '%kernel.project_dir%/config/datasFixtures/productsFixtures.yaml'
     categories_images: '%kernel.project_dir%/public/images/categories'
     products_images: '%kernel.project_dir%/public/images/products'
+    app.publicKeyStripe: "%env(PUBLIC_KEY_STRIPE)%"
+    app.secreteKeyStripe: "%env(SECRETE_KEY_STRIPE)%"
+    stripe.webhook_secret: '%env(STRIPE_WEBHOOK_SECRET)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -25,7 +28,9 @@ services:
     App\Service\NumberProductsFixtures:
         public: true
 
-
+#    Stripe\Stripe:
+#        arguments:
+#            apiKey: "%env(SECRETE_KEY_STRIPE)%"
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 #    App\Twig\TwigGlobalSubscriber:

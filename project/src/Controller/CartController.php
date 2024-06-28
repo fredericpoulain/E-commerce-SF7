@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Products;
+use App\Repository\BillingAddressesRepository;
 use App\Repository\ProductsRepository;
+use App\Repository\ShippingAddressesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -17,22 +19,44 @@ class CartController extends AbstractController
 
 
     #[Route('/', name: 'index')]
-    public function index(SessionInterface $session, ProductsRepository $productsRepository): Response
+    public function index(
+        SessionInterface $session,
+        ProductsRepository $productsRepository,
+        ShippingAddressesRepository $shippingAddressesRepository,
+        BillingAddressesRepository $billingAddressesRepository
+    ): Response
     {
+
         $cart = $session->get('cart', []);
+//        dd($cart);
         $dataCart = [];
         $total = 0;
 
         foreach($cart as $id => $quantity){
-            $product = $productsRepository->find($id);
+            if (is_int($id)){
+                $product = $productsRepository->find($id);
 
-            $dataCart[] = [
-                'product' => $product,
-                'quantity' => $quantity
-            ];
-            $total += $product->getPrice() * $quantity;
+                $dataCart[] = [
+                    'product' => $product,
+                    'quantity' => $quantity
+                ];
+                $total += $product->getPrice() * $quantity;
+            }
+
         }
-        return $this->render('cart/cart.html.twig', compact('dataCart', 'total'));
+        $shippingAddress = null;
+        $billingAddress = null;
+        if ($this->getUser()){
+            $shippingAddress = $shippingAddressesRepository->findOneBy([
+                'user' => $this->getUser(),
+                'isMain' => true
+            ]);
+            $billingAddress = $billingAddressesRepository->findOneBy([
+                'user' => $this->getUser(),
+                'isMain' => true
+            ]);
+        }
+        return $this->render('cart/cart.html.twig', compact('dataCart', 'total', 'shippingAddress', 'billingAddress'));
     }
 
     /**

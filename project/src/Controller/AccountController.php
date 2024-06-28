@@ -91,7 +91,7 @@ class AccountController extends AbstractController
                         $formPassword->get('newPassword')->getData()
                     )
                 );
-                $this->addFlash('success', 'Mot de passe modifié avec succès');
+                $this->addFlash('successMessageFlash', 'Mot de passe modifié avec succès');
             }
 
             $entityManager->persist($user); //of whatever the entity object you're using to create the form2 form
@@ -194,7 +194,7 @@ class AccountController extends AbstractController
 
             $entityManager->persist($address);
             $entityManager->flush();
-            $this->addFlash('success', "Adresse ajoutée avec succès !");
+            $this->addFlash('successMessageFlash', "Adresse ajoutée avec succès !");
 
             return $this->redirectToRoute('app_addresses');
         }
@@ -262,7 +262,7 @@ class AccountController extends AbstractController
 
                 $entityManager->persist($address);
                 $entityManager->flush();
-                $this->addFlash('success', "Adresse modifiée avec succès !");
+                $this->addFlash('successMessageFlash', "Adresse modifiée avec succès !");
                 return $this->redirectToRoute('app_addresses');
             }
 
@@ -302,7 +302,7 @@ class AccountController extends AbstractController
 
                 $entityManager->persist($addressBilling);
                 $entityManager->flush();
-                $this->addFlash('success', "Adresse de facturation modifiée avec succès !");
+                $this->addFlash('successMessageFlash', "Adresse de facturation modifiée avec succès !");
                 return $this->redirectToRoute('app_addresses');
             }
 
@@ -340,7 +340,7 @@ class AccountController extends AbstractController
             $address = $shippingAddressesRepository->find($id);
             $entityManager->remove($address);
             $entityManager->flush();
-            $this->addFlash('success', "Suppression de l'adresse réalisée avec succès !");
+            $this->addFlash('successMessageFlash', "Suppression de l'adresse réalisée avec succès !");
             return $this->redirectToRoute('app_addresses');
         }
         $this->addFlash('danger', "Vous n'avez pas l'autorisation pour supprimer cette adresse !");
@@ -366,7 +366,7 @@ class AccountController extends AbstractController
         }
         $address->setIsMain(true);
         $entityManager->flush();
-        $this->addFlash('success', "Adresse préférée ajoutée avec succès !");
+        $this->addFlash('successMessageFlash', "Adresse préférée ajoutée avec succès !");
         return $this->redirectToRoute('app_addresses');
 
     }
