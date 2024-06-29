@@ -64,20 +64,21 @@
                         <div class="addresses">
                             <div class="shipping">
                                 <h2>Livraison</h2>
-                                <h5>Jeannine Da Silva</h5>
+
+                                <h5>{{ shippingAddress.firstname }}&nbsp;{{ shippingAddress.lastname }}</h5>
                                 <p>
-                                    <span>7, impasse Édouard Royer</span><br>
-                                    <span>80743 Rocher</span><br>
-                                    <span>0637469488</span><br>
+                                    <span>{{ shippingAddress.address }}</span><br>
+                                    <span>{{ shippingAddress.zipcode }}&nbsp;{{ shippingAddress.city }}</span><br>
+                                    <span>{{ shippingAddress.phone ? shippingAddress.phone : '' }}</span><br>
                                 </p>
                             </div>
                             <div class="billing">
                                 <h2>Facturation</h2>
-                                <h5>Jeannine Da Silva</h5>
+                                <h5>{{ billingAddress.firstname }}&nbsp;{{ billingAddress.lastname }}</h5>
                                 <p>
-                                    <span>7, impasse Édouard Royer</span><br>
-                                    <span>80743 Rocher</span><br>
-                                    <span>0637469488</span><br>
+                                    <span>{{ billingAddress.address }}</span><br>
+                                    <span>{{ billingAddress.zipcode }}&nbsp;{{ billingAddress.city }}</span><br>
+                                    <span>{{ billingAddress.phone ? billingAddress.phone : '' }}</span><br>
                                 </p>
                             </div>
                         </div>
@@ -97,7 +98,7 @@
                     </div>
                     <div class="placeOrder">
                         {% if app.user %}
-                            <a href="{{ path('app_stripe') }}">
+                            <a href="{{ path('app_orders_add') }}">
                                 Passer commande
                             </a>
                         {% else %}

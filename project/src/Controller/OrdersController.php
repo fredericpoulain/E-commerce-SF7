@@ -6,6 +6,7 @@ use App\Entity\Orders;
 use App\Entity\OrdersDetails;
 use App\Entity\ShippingAddresses;
 use App\Repository\BillingAddressesRepository;
+use App\Repository\OrderStatusRepository;
 use App\Repository\ProductsRepository;
 use App\Repository\ShippingAddressesRepository;
 use App\Repository\UsersRepository;
@@ -24,7 +25,9 @@ class OrdersController extends AbstractController
         ProductsRepository $productsRepository,
         EntityManagerInterface $em,
         ShippingAddressesRepository $shippingAddressesRepository,
-        BillingAddressesRepository $billingAddressesRepository): Response
+        BillingAddressesRepository $billingAddressesRepository,
+        OrderStatusRepository $orderStatusRepository
+    ): Response
     {
 //        dd('ddddd');
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -54,7 +57,11 @@ class OrdersController extends AbstractController
         $order->setShippingAddress($shippingAddress);
         $order->setBillingAddress($billingAddress);
 
-
+        $pendingPaymentStatus = $orderStatusRepository->findOneBy(['statusName' => 'pendingPayment']);
+        if (!$pendingPaymentStatus) {
+            throw new \Exception("Le statut 'pendingPayment' n'existe pas.");
+        }
+        $order->setOrderStatus($pendingPaymentStatus);
         // On parcourt le panier pour créer les détails de commande
         foreach ($cart as $item => $quantity) {
             if (is_int($item)){
@@ -84,10 +91,10 @@ class OrdersController extends AbstractController
         $em->persist($order);
         $em->flush();
 
-        $session->remove('cart');
+//        $session->remove('cart');
 
-        $this->addFlash('successMessageFlash', 'Commande passée avec succès');
-        return $this->redirectToRoute('app_order_account');
+//        $this->addFlash('successMessageFlash', 'Commande passée avec succès');
+        return $this->redirectToRoute('app_stripe', ['id' => $order->getId(),]);
     }
     #[Route('/cancel', name: 'cancel')]
     public function cancel(): Response
@@ -96,11 +103,6 @@ class OrdersController extends AbstractController
         $this->addFlash('infoMessageFlash', 'La commande a été annulée');
         return $this->redirectToRoute('app_home');
     }
-    #[Route('/ajouter', name: 'ajouter')]
-    public function ajouter(): Response
-    {
 
-        dd('fgfgfg');
-    }
 
 }

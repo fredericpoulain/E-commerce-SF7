@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Orders;
+use App\Repository\OrdersRepository;
+use App\Repository\OrderStatusRepository;
 use App\Repository\ProductsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,60 +17,89 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class StripeController extends AbstractController
 {
-    #[Route('/stripe', name: 'app_stripe')]
-    public function index(SessionInterface $sessionInterface, ProductsRepository $productsRepository): Response
+    #[Route('/stripe/{id}', name: 'app_stripe')]
+    public function index($id, OrdersRepository $ordersRepository, SessionInterface $sessionInterface, ProductsRepository $productsRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $secretKeyStripe = $this->getParameter('app.secreteKeyStripe');
-        \Stripe\Stripe::setApiKey($secretKeyStripe);
-        \Stripe\Stripe::setApiVersion('2024-06-20');
-        $cart = $sessionInterface->get('cart', []);
-        $arrayLineItems = [];
-        foreach ($cart as $item => $quantity) {
-            if (is_int($item)){
-                $product = $productsRepository->find($item);
-                $price = $product->getPrice();
-                $name = $product->getName();
+        $orders = $ordersRepository->find($id);
+        $statusName = $orders->getOrderStatus()->getStatusName();
+        if ($statusName === 'pendingPayment' || $statusName  === 'paymentFailed') {
 
-                $arrayLineItems[] = [
-                    'quantity' => $quantity,
-                    'price_data'=> [
-                        'currency' => 'EUR',
-                        'product_data' => [
-                            'name' => $name,
-                        ],
-                        'unit_amount' => $price,
-                    ]
-                ];
+            $secretKeyStripe = $this->getParameter('app.secreteKeyStripe');
+            \Stripe\Stripe::setApiKey($secretKeyStripe);
+            \Stripe\Stripe::setApiVersion('2024-06-20');
+            $cart = $sessionInterface->get('cart', []);
+            $arrayLineItems = [];
+            foreach ($cart as $item => $quantity) {
+                if (is_int($item)){
+                    $product = $productsRepository->find($item);
+                    $price = $product->getPrice();
+                    $name = $product->getName();
+
+                    $arrayLineItems[] = [
+                        'quantity' => $quantity,
+                        'price_data'=> [
+                            'currency' => 'EUR',
+                            'product_data' => [
+                                'name' => $name,
+                            ],
+                            'unit_amount' => $price,
+                        ]
+                    ];
+                }
+
             }
 
-        }
+            $sessionStripe = Session::create([
+                //mode ici ce sera un paiment. si on choisi subscription, c'est pour démarrer un abonnement
 
-        $sessionStripe = Session::create([
-            //mode ici ce sera un paiment. si on choisi subscription, c'est pour démarrer un abonnement
-            'mode' => 'payment',
-            'success_url' => 'http://127.0.0.1:8000/orders/add',
-            'cancel_url' => 'http://127.0.0.1:8000/orders/cancel',
-            //si notre application ne gère pas en amont les adresses de livraisons et facturation, on peut demander à stripe de récupérer ces informations.
-            //Ensuite on pourra récupérer ces adresses pour gérer la livraison et la facture
+                //si notre application ne gère pas en amont les adresses de livraisons et facturation, on peut demander à stripe de récupérer ces informations.
+                //Ensuite on pourra récupérer ces adresses pour gérer la livraison et la facture
 //            'billing_address_collection' => 'required',
 //            'shipping_address_collection' => [
 //                'allowed_countries' => ['FR'],
 //            ],
-        'line_items' => $arrayLineItems
-        ]);
-        $cart['idSessionStripe'] = $sessionStripe->id;
-        $sessionInterface->set('cart', $cart);
-       //rediriger...
-        return $this->redirect($sessionStripe->url);
+                'payment_method_types' => ['card'],
+                'line_items' => [$arrayLineItems],
+                'mode' => 'payment',
+                'success_url' => 'http://127.0.0.1:8000/commandes',
+                'cancel_url' => 'http://127.0.0.1:8000/orders/cancel',
+                'payment_intent_data' => [
+                    'metadata' => [
+                        'orderId' => $orders->getId(),
+                    ],
+                ],
+            ]);
+            $cart['idSessionStripe'] = $sessionStripe->id;
+            $sessionInterface->set('cart', $cart);
+            //rediriger...
+            return $this->redirect($sessionStripe->url);
+        }
+        $this->addFlash('infoMessageFlash', 'Commande déjà payée');
+        return $this->redirectToRoute('app_order_account');
     }
 
-    #[Route('/stripe/webhook', name: 'app_stripe_webhook')]
-    public function stripeWebhook(Request $request): Response
+    #[Route('/webhookStripe', name: 'app_stripe_webhook')]
+    public function stripeWebhook(
+        Request $request,
+        OrderStatusRepository $orderStatusRepository,
+        OrdersRepository $ordersRepository,
+        EntityManagerInterface $entityManager,
+    ): Response
     {
-        $payload = $request->getContent();
-        $sig_header = $request->headers->get('Stripe-Signature');
+
+//        $this->denyAccessUnlessGranted('ROLE_USER');
+        $secretKeyStripe = $this->getParameter('app.secreteKeyStripe');
         $endpoint_secret = $this->getParameter('stripe.webhook_secret');
+
+        new \Stripe\StripeClient($secretKeyStripe);
+        \Stripe\Stripe::setApiKey($secretKeyStripe);
+        \Stripe\Stripe::setApiVersion('2024-06-20');
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+//        $user = $this->getUser();
 
         try {
             $event = \Stripe\Webhook::constructEvent(
@@ -74,31 +107,40 @@ class StripeController extends AbstractController
             );
         } catch(\UnexpectedValueException $e) {
             // Invalid payload
-            return new Response('Invalid payload', 400);
+            http_response_code(400);
+            exit();
         } catch(\Stripe\Exception\SignatureVerificationException $e) {
             // Invalid signature
-            return new Response('Invalid signature', 400);
+            http_response_code(400);
+            exit();
         }
-
-        // Handle the event
+        $paymentIntent = $event->data->object;
+        $metadata = $paymentIntent->metadata;
+        $orderId = $metadata->orderId ?? 'unknown';
+        $order = $ordersRepository->find($orderId);
         switch ($event->type) {
+//            case 'payment_intent.payment_failed':
             case 'payment_intent.payment_failed':
-                $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
-                $logMessage = sprintf(
-                    "Payment failed: %s. Reason: %s\n",
-                    $paymentIntent->id,
-                    $paymentIntent->last_payment_error ? $paymentIntent->last_payment_error->message : 'Unknown error'
-                );
-                //Ici, c'est un simple test pour voir le si l'event "payment_intent.payment_failed" a bien été capturé.
-                // (on peut imaginer dans une autre application mettre à jour le statut de la commande dans la base de données.)
-                file_put_contents($this->getParameter('kernel.project_dir').'/payment-failed.log', $logMessage, FILE_APPEND);
 
+                $paymentFailedtStatus = $orderStatusRepository->findOneBy(['statusName' => 'paymentFailed']);
+                if (!$paymentFailedtStatus) {
+                    throw new \Exception("Le statut 'paymentFailed' n'existe pas.");
+                }
+                $order->setOrderStatus($paymentFailedtStatus);
                 break;
-            // ... handle other event types
-            default:
-                return new Response('Received unknown event type', 400);
-        }
+            case 'payment_intent.succeeded':
 
-        return new Response('Received webhook', 200);
+                $paymentSuccessStatus = $orderStatusRepository->findOneBy(['statusName' => 'paymentSuccess']);
+                if (!$paymentSuccessStatus) {
+                    throw new \Exception("Le statut 'paymentSuccess' n'existe pas.");
+                }
+                $order->setOrderStatus($paymentSuccessStatus);
+                break;
+            default:
+                echo 'Received unknown event type ' . $event->type;
+        }
+        $entityManager->persist($order);
+        $entityManager->flush();
+        return new Response(http_response_code(200));
     }
 }
