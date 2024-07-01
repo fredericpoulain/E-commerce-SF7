@@ -28,7 +28,6 @@ class CartController extends AbstractController
     {
 
         $cart = $session->get('cart', []);
-//        dd($cart);
         $dataCart = [];
         $total = 0;
 
@@ -86,7 +85,7 @@ class CartController extends AbstractController
      * //pour retirer un produit
      */
     #[Route('/remove/{id}', name: 'remove')]
-    public function remove(Products $products, SessionInterface $session)
+    public function remove(Products $products, SessionInterface $session): RedirectResponse
     {
         //On récupère l'id du produit
         $id = $products->getId();

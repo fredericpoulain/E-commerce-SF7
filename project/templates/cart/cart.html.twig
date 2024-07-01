@@ -61,6 +61,7 @@
                         {% endfor %}
                     </ul>
                     {% if app.user %}
+                        {% if app.user.shippingAddresses is not empty %}
                         <div class="addresses">
                             <div class="shipping">
                                 <h2>Livraison</h2>
@@ -87,7 +88,13 @@
                                 Modifier les adresses
                             </a>
                         </div>
-
+                        {% else %}
+                            <div class="blocButtonAddresses">
+                                <a class="modifyAddresses" href="{{ path('app_addresses') }}">
+                                    Ajouter une adresse
+                                </a>
+                            </div>
+                        {% endif %}
                     {% endif %}
 
                 </div>
@@ -98,7 +105,7 @@
                     </div>
                     <div class="placeOrder">
                         {% if app.user %}
-                            <a href="{{ path('app_orders_add') }}">
+                            <a href="{{ path('app_stripe_session') }}">
                                 Passer commande
                             </a>
                         {% else %}

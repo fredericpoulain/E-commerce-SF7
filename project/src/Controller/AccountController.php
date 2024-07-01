@@ -15,11 +15,13 @@ use App\Repository\OrdersDetailsRepository;
 use App\Repository\ShippingAddressesRepository;
 use App\Repository\UsersRepository;
 use App\Security\EmailVerifier;
+use App\Service\OrderDetailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -108,7 +110,7 @@ class AccountController extends AbstractController
     }
 
     #[Route('/commandes', name: 'app_order_account')]
-    public function orders(OrdersDetailsRepository $ordersDetailsRepository): Response
+    public function orders(OrdersDetailsRepository $ordersDetailsRepository, OrderDetailService $orderDetailService, SessionInterface $session): Response
     {
         $user = $this->getUser();
         $orders = $user->getOrders();
@@ -116,6 +118,8 @@ class AccountController extends AbstractController
         foreach ($orders as $order) {
             //je récupère l'id de la commande
             $id = $order->getId();
+
+
             // Récupération des détails de la commande pour calculer le prix total
             $orderDetails = $ordersDetailsRepository->findBy(['orders' => $order]);
             $totalPrice = 0;
@@ -132,10 +136,11 @@ class AccountController extends AbstractController
             ];
         }
 
-
+        $orderDetails = $orderDetailService->getOrderDetails(58);
 
         return $this->render('account/pages/order.html.twig', [
             'datasOrders' => $datasOrders,
+            'orderDetails' => $orderDetails,
         ]);
     }
 
@@ -145,6 +150,7 @@ class AccountController extends AbstractController
         dd($orders);
         return $this->render('account/pages/order.html.twig');
     }
+
 
 
 
@@ -204,6 +210,8 @@ class AccountController extends AbstractController
                 $addressBilling->setAddress($formAddress->get('address')->getData());
                 $addressBilling->setFirstname($formAddress->get('firstname')->getData());
                 $addressBilling->setLastname($formAddress->get('lastname')->getData());
+                $addressBilling->setIsMain(true);
+
 //                $addressBilling->setAdditional($formAddress->get('additional')->getData());
                 $entityManager->persist($addressBilling);
             }
