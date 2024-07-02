@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OrdersController extends AbstractController
 {
-    private const string STATUS_SUCCESS = 'payment_success';
+    private const string STATUS_SUCCESS = 'paid';
 
     public function __construct(
         private readonly ProductsRepository          $productsRepository,

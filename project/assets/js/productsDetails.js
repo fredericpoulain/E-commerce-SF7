@@ -1,5 +1,5 @@
 import '../styles/productsDetails.css';
-
+import '../styles/formPage.css';
 import '../glideJS/glide.core.min.css';
 import '../glideJS/glide.theme.min.css';
 import '../glideJS/glide.min.js';

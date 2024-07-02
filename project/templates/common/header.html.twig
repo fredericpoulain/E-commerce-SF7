@@ -80,7 +80,11 @@
         <ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                <li><a href="{{ path('app_informations') }}">Mon compte</a> &nbsp; | &nbsp; <a href="{{ path('app_admin') }}">Dashboard</a></li>
+                <li><a href="{{ path('app_informations') }}">Mon compte</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    &nbsp; | &nbsp; <a href="{{ path('app_admin') }}">Dashboard</a>
+                {% endif %}
+                </li>
                 <hr>
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% else %}

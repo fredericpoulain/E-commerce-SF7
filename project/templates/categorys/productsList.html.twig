@@ -5,10 +5,12 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-    {% include 'common/breadcrumb.html.twig' %}
+
     <div class="pageTitle">
         <a href=""><h1>{{ title }}</h1></a>
     </div>
+    {% if products is not null %}
+    {% include 'common/breadcrumb.html.twig' %}
     <div class="mainPage">
 
         <div class="listLinkProductPage">
@@ -40,6 +42,12 @@
 
         </div>
     </div>
+    {% else %}
+        <div class="pageTitle">
+            <h3>Aucuns produits dans cette catégorie</h3>
+        </div>
+
+    {% endif %}
 
 
 

@@ -33,7 +33,8 @@ form> div label {
     margin-bottom: 3px;
     border-radius: 5px;
 }
-form input {
+form input,
+form textarea{
     font-size: 16px;
     outline: none;
     border: solid 1px var(--blueLight1);
@@ -41,6 +42,9 @@ form input {
     background-color: transparent;
     padding: 5px;
     color: var(--white1);
+}
+form textarea::placeholder{
+    color: #b6b7b8;
 }
 form p {
     text-align: center;

@@ -1,6 +1,9 @@
 .container{
     max-width: 800px ;
 }
+.titleBloc{
+    text-align: center;
+}
 .product{
     display: flex;
     align-items: center;
@@ -89,8 +92,30 @@
 .glide__arrow--right {
     right: 1em;
 }
-
-
+.commentBloc{
+    margin-bottom: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+    /*padding: 10px;*/
+    border: solid 1px var(--backgroundPrimary1);
+}
+.commentHeader{
+    background-color: var(--backgroundPrimary1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+.commentHeader >div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.commentBody{
+    padding: 10px;
+}
 @media screen and (min-width: 500px){
     .product{
         width: 90%;

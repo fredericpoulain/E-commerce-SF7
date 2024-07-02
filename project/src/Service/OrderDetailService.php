@@ -36,6 +36,7 @@ class OrderDetailService
         }
 
         return [
+            'order' => $order,
             'items' => $items,
             'total' => $total
         ];

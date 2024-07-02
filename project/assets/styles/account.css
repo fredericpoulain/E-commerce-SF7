@@ -198,6 +198,20 @@ td, th, td a {
 tr:nth-child(even) {
     background-color: var(--backgroundPrimary2);
 }
+.orderStatus{
+    display: none;
+}
+.containerOrderDetails{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (min-width: 450px){
+    .orderStatus{
+        display: table-cell;
+    }
+}
+
 @media screen and (min-width: 600px) {
     .addressInfos{
         display: flex;

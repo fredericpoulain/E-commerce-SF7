@@ -5,7 +5,7 @@
 {% block bodyAccount %}
     <div class="titleBloc">
         <h1>Mes commandes</h1>
-        {{ dump(orderDetails) }}
+        {%  if datasOrders is not empty %}
         <div class="ordersTable">
             <table>
                 <thead>
@@ -13,6 +13,7 @@
                     <th>Référence</th>
                     <th>Date</th>
                     <th>Montant</th>
+                    <th class="orderStatus">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -21,12 +22,16 @@
                         <td><a href="{{ path('app_orderDetails_account', {reference: order.reference }) }}">{{ order.reference }}</a></td>
                         <td> {{ order.orderDate.format('d/m/Y') }}</td>
                         <td>{{ order.totalPrice / 100 }} €</td>
+                        <td class="orderStatus">{{ order.orderStatus|trans }}</td>
                     </tr>
                 {% endfor %}
 
                 </tbody>
             </table>
         </div>
+        {% else %}
+            <h3>Aucunes commandes</h3>
+        {% endif %}
 
 
     </div>

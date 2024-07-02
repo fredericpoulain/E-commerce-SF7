@@ -131,24 +131,25 @@ class AccountController extends AbstractController
             $datasOrders[] = [
                 'reference' => $order->getReference(),
                 'orderDate' => $order->getOrderDate(),
+                'orderStatus' => $order->getStatus(),
                 'totalPrice' => $totalPrice
 
             ];
         }
 
-        $orderDetails = $orderDetailService->getOrderDetails(58);
+
 
         return $this->render('account/pages/order.html.twig', [
             'datasOrders' => $datasOrders,
-            'orderDetails' => $orderDetails,
         ]);
     }
 
     #[Route('/commandes/{reference}', name: 'app_orderDetails_account')]
-    public function orderDetails(Orders $orders): Response
+    public function orderDetails(Orders $orders, OrderDetailService $orderDetailService): Response
     {
-        dd($orders);
-        return $this->render('account/pages/order.html.twig');
+        $orderDetails = $orderDetailService->getOrderDetails($orders->getId());
+//        dd($orderDetails);
+        return $this->render('account/pages/orderDetails.html.twig', compact("orderDetails"));
     }
 
 

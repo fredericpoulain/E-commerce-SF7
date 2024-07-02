@@ -43,29 +43,31 @@ class CategorysController extends AbstractController
     ): Response
     {
         $products = $categories->getProducts()->toArray();
+        if ($products){
+            //Récupération de la valeur de "page" dans l'URL. Si non-présente, 1 par défaut
+            $page = $request->query->getInt('page', 1);
+            //On fixe une limite de 4 projets par page
+            $limit = 8;
+            //On récupère les products paginés via KNP_Paginator
+            $productsPaginated =  $paginator->paginate(
+                $products,
+                $page,
+                $limit
+            );
+            //page maximale : nombreDeProjets / limiteParPage → arrondi au supérieur.
+            $maxPage = ceil($productsPaginated->getTotalItemCount() / $limit);
+            //si on tente d'accéder à une page supérieure à la page maximale, on redirige.
 
-        //Récupération de la valeur de "page" dans l'URL. Si non-présente, 1 par défaut
-        $page = $request->query->getInt('page', 1);
-        //On fixe une limite de 4 projets par page
-        $limit = 8;
-        //On récupère les products paginés via KNP_Paginator
-        $productsPaginated =  $paginator->paginate(
-            $products,
-            $page,
-            $limit
-        );
-        //page maximale : nombreDeProjets / limiteParPage → arrondi au supérieur.
-        $maxPage = ceil($productsPaginated->getTotalItemCount() / $limit);
-        //si on tente d'accéder à une page supérieure à la page maximale, on redirige.
+            if ($page > $maxPage) return $this->redirectToRoute('app_productsList', ['slug' => $categories->getSlug()]);
 
-//        if ($page > $maxPage) return $this->redirectToRoute('app_productsList', ['slug' => $categories->getSlug()]);
-
-        $dataBreadcrumb = $breadcrumbService->getData($categories);
+            $dataBreadcrumb = $breadcrumbService->getData($categories);
+        }
         return $this->render('categorys/productsList.html.twig', [
             'title' => $categories->getName(),
-            'products' => $productsPaginated,
-            'dataBreadcrumb' => $dataBreadcrumb,
+            'products' => $productsPaginated ?? null,
+            'dataBreadcrumb' => $dataBreadcrumb ?? null,
         ]);
+
     }
 
 
